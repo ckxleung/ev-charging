@@ -1,0 +1,797 @@
+<!doctype html>
+<html lang="zh-Hant-HK">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:,">
+<title>EV充電樁安裝 — 已完成基建屋苑車位業主專頁</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Archivo:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f7f5; --surface:#ffffff; --surface2:#eef3f0; --ink:#14201a; --muted:#5b6b62;
+  --line:#d9e2dc; --accent:#0f7a4d; --accent-ink:#ffffff; --accent-soft:#e3f2e9;
+  --warn-bg:#fff6e0; --warn-line:#ecd48a; --warn-ink:#6b5310;
+  --wa:#1faa55; --radius:14px;
+  --shadow:0 10px 30px rgba(20,32,26,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#0e1512; --surface:#16211b; --surface2:#1b2921; --ink:#eef4f0; --muted:#a7b8ad;
+  --line:#2a3a31; --accent:#2fbf71; --accent-ink:#08130c; --accent-soft:#173527;
+  --warn-bg:#2b2410; --warn-line:#5c4d1a; --warn-ink:#f0d48a; --shadow:0 10px 30px rgba(0,0,0,.35); }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans TC",system-ui,-apple-system,"PingFang HK","Microsoft JhengHei",sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px 56px}
+a{color:var(--accent)}
+.langbar{display:flex;justify-content:flex-end;gap:6px;padding-top:14px}
+.langbar button{border:1.5px solid var(--line);background:var(--surface);color:var(--muted);font-family:inherit;font-size:13.5px;font-weight:700;padding:7px 14px;border-radius:999px;cursor:pointer}
+.langbar button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+/* Hero */
+.hero{padding:34px 0 8px}
+.hero-badge{display:inline-flex;align-items:center;gap:7px;background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:13px;padding:6px 12px;border-radius:999px;border:1px solid var(--line)}
+.hero-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+h1{font-size:clamp(30px,7vw,44px);line-height:1.15;margin:16px 0 10px;font-weight:900;letter-spacing:-.02em}
+h1 .hl{color:var(--accent)}
+.hero p.lead{font-size:17px;color:var(--muted);margin:0 0 18px;max-width:56ch}
+.hero-cta{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);font-weight:800;font-size:16px;padding:14px 22px;border-radius:12px;text-decoration:none;margin:2px 0 6px}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0 6px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 12px;text-align:center}
+.stat b{display:block;font-family:"Archivo",sans-serif;font-size:26px;line-height:1;color:var(--ink)}
+.stat span{font-size:13px;color:var(--muted)}
+/* Steps nav */
+.steps{display:flex;gap:8px;margin:22px 0 4px;flex-wrap:wrap}
+.step-pill{flex:1;min-width:0;display:flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 9px;font-size:13px;font-weight:700;white-space:nowrap}
+.step-pill i{font-style:normal;width:24px;height:24px;border-radius:50%;background:var(--surface2);display:grid;place-items:center;font-size:13px;flex:none}
+.step-pill.active{border-color:var(--accent);background:var(--accent-soft)}
+.step-pill.active i{background:var(--accent);color:var(--accent-ink)}
+.step-pill.done i{background:var(--accent);color:var(--accent-ink)}
+section.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px 18px;margin-top:18px;box-shadow:var(--shadow)}
+section.card h2{margin:0 0 6px;font-size:21px;font-weight:900;display:flex;align-items:center;gap:10px}
+section.card h2 .n{width:28px;height:28px;border-radius:8px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-size:15px;flex:none}
+section.card .sub{color:var(--muted);font-size:14px;margin:0 0 16px}
+/* Region chips */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.chip{border:1px solid var(--line);background:var(--surface2);color:var(--ink);padding:8px 14px;border-radius:999px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.chip small{opacity:.75;font-weight:500}
+/* Search */
+.searchbox{position:relative}
+.searchbox svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:19px;height:19px;color:var(--muted)}
+.searchbox input{width:100%;padding:14px 14px 14px 44px;font-size:16px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);font-family:inherit}
+.searchbox input:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+.results{max-height:300px;overflow:auto;border:1px solid var(--line);border-radius:12px;margin-top:12px}
+.result-item{display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;text-align:left;background:var(--surface);border:0;border-bottom:1px solid var(--line);padding:12px 14px;cursor:pointer;font-family:inherit;color:var(--ink)}
+.result-item:last-child{border-bottom:0}
+.result-item:hover,.result-item:focus-visible{background:var(--accent-soft)}
+.result-item .nm{font-weight:700;font-size:15px}
+.result-item .en{font-size:12.5px;color:var(--muted)}
+.result-item .tag{flex:none;font-size:12px;font-weight:700;background:var(--surface2);border:1px solid var(--line);padding:3px 9px;border-radius:999px}
+.empty{padding:18px 14px;font-size:14px;color:var(--muted)}
+.selected-box{display:none;margin-top:14px;background:var(--accent-soft);border:1px solid var(--accent);border-radius:12px;padding:14px}
+.selected-box.show{display:block}
+.selected-box b{font-size:16px}
+.selected-box .row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.link-btn{background:none;border:0;color:var(--accent);font-weight:700;cursor:pointer;font-family:inherit;font-size:14px;padding:4px}
+.notfound{display:none;margin-top:14px;background:var(--warn-bg);border:1px solid var(--warn-line);color:var(--warn-ink);border-radius:12px;padding:14px;font-size:14px}
+.notfound.show{display:block}
+/* Chargers */
+.chargers{display:grid;gap:12px}
+@media(min-width:620px){.chargers{grid-template-columns:repeat(3,1fr)}}
+.charger{border:1.5px solid var(--line);border-radius:14px;padding:16px 14px;cursor:pointer;background:var(--surface);position:relative}
+.charger input{width:19px;height:19px;accent-color:var(--accent);margin:0 0 8px;cursor:pointer}
+.charger .kw{font-family:"Archivo",sans-serif;font-size:30px;font-weight:800;line-height:1}
+.charger .kw small{font-size:15px}
+.charger .phase{font-weight:700;font-size:14px;margin:4px 0 8px;color:var(--accent)}
+.charger ul{margin:0;padding-left:18px;font-size:13.5px;color:var(--muted)}
+.charger .rec{position:absolute;top:12px;right:12px;background:var(--accent);color:var(--accent-ink);font-size:11px;font-weight:800;padding:3px 8px;border-radius:999px}
+.charger.selected{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 1px var(--accent)}
+.price-note{margin-top:12px;font-size:13.5px;color:var(--muted);background:var(--surface2);border-radius:10px;padding:10px 12px}
+/* Form */
+.field{margin-top:14px}
+.field label{display:block;font-weight:700;font-size:14px;margin-bottom:6px}
+.field input{width:100%;padding:12px 14px;font-size:16px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);font-family:inherit}
+.field input:focus{outline:2px solid var(--accent);outline-offset:1px}
+.msg-preview{background:var(--surface2);border:1px dashed var(--line);border-radius:12px;padding:14px;font-size:14.5px;white-space:pre-wrap;word-break:break-word;min-height:96px}
+.cta-row{display:grid;gap:10px;margin-top:14px}
+@media(min-width:560px){.cta-row{grid-template-columns:1.4fr 1fr}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:15px 16px;border-radius:12px;font-size:16px;font-weight:800;border:0;cursor:pointer;font-family:inherit;text-decoration:none;text-align:center}
+.btn-wa{background:var(--wa);color:#fff}
+.btn-wa:disabled{background:var(--line);color:var(--muted);cursor:not-allowed}
+.btn-copy{background:var(--surface);color:var(--ink);border:1.5px solid var(--line)}
+.btn-copy:disabled{color:var(--muted);cursor:not-allowed}
+.hint{font-size:13px;color:var(--muted);margin-top:10px}
+/* Process */
+.process{display:grid;gap:0}
+.pstep{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.pstep:last-child{border-bottom:0}
+.pstep .ic{width:42px;height:42px;flex:none;border-radius:12px;background:var(--accent-soft);display:grid;place-items:center;color:var(--accent)}
+.pstep .ic svg{width:21px;height:21px}
+.pstep b{display:block;font-size:15.5px}
+.pstep p{margin:2px 0 0;font-size:14px;color:var(--muted)}
+/* FAQ */
+details{border-bottom:1px solid var(--line);padding:12px 0}
+details:last-child{border-bottom:0}
+summary{font-weight:700;cursor:pointer;font-size:15.5px}
+details p{color:var(--muted);font-size:14.5px;margin:8px 0 4px}
+/* Push table */
+.push{display:grid;gap:10px}
+.push-row{display:flex;gap:12px;background:var(--surface2);border-radius:12px;padding:12px 14px;font-size:14px}
+.push-row b{flex:none;min-width:74px}
+.push-row span{color:var(--muted)}
+/* Visuals */
+.hero-visual{margin:20px 0 4px;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);background:#e9f2ed}
+.hero-visual svg{display:block;width:100%;height:auto}
+.charger-visual{display:flex;gap:16px;align-items:center;background:var(--surface2);border-radius:14px;padding:14px 16px;margin-bottom:16px}
+.charger-visual svg{width:104px;height:auto;flex:none}
+.charger-visual b{display:block;font-size:15.5px;margin-bottom:2px}
+.charger-visual p{margin:0;font-size:14px;color:var(--muted)}
+.cglyph{width:34px;height:40px;display:block;margin:2px 0 10px}
+.trust-flex{display:flex;gap:20px;align-items:center}
+.trust-flex svg{width:158px;height:auto;flex:none}
+.trust-flex h2{margin-bottom:6px}
+.trust-flex p{margin:0;color:var(--muted);font-size:15px}
+@media(max-width:560px){.trust-flex{flex-direction:column;text-align:center}.trust-flex svg{width:138px}.charger-visual{align-items:flex-start}}
+.energy{stroke-dasharray:5 9;animation:flow 1.4s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-14}}
+.led{animation:pulse 2.2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+footer{margin-top:26px;font-size:12.5px;color:var(--muted);text-align:center;line-height:1.7}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(80px);background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:999px;font-weight:700;font-size:14px;transition:transform .25s;z-index:50;max-width:92vw;text-align:center}
+.toast.show{transform:translateX(-50%) translateY(0)}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}.toast{transition:none}.energy,.led{animation:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="langbar" role="group" aria-label="語言 / Language">
+    <button type="button" id="langZh" aria-pressed="true">中文</button>
+    <button type="button" id="langEn" aria-pressed="false">English</button>
+  </div>
+
+  <header class="hero">
+    <span class="hero-badge"><span class="dot"></span><span data-i18n="badge">只限已完成基建屋苑 · EHSS 名單</span></span>
+    <h1 data-i18n-html="h1">屋苑基建已完成，<br>車位業主可以<span class="hl">裝充電樁</span>喇</h1>
+    <p class="lead" data-i18n="lead">呢頁係俾已完成充電基建屋苑嘅車位業主：公共基建已經做好，只差你自己車位嗰一段。查到你屋苑喺名單入面、揀好充電樁，一撳就可以預約報價，之後就可以喺自己車位充電。</p>
+    <a class="hero-cta" href="#step1" data-i18n="heroCta">即刻查你屋苑裝唔裝得 ↓</a>
+    <figure class="hero-visual" style="margin-left:0;margin-right:0">
+      <svg viewBox="0 0 720 320" role="img" data-i18n-aria="heroArtAlt" aria-label="插圖：電動車泊喺屋苑停車場自己車位，插住牆身充電樁充電">
+        <rect width="720" height="240" fill="#edf4f0"/>
+        <rect y="240" width="720" height="80" fill="#cfdfd6"/>
+        <path d="M0 240h720" stroke="#bcd2c6" stroke-width="2"/>
+        <rect x="26" y="28" width="196" height="176" rx="10" fill="none" stroke="#d9e6de" stroke-width="2"/>
+        <rect x="452" y="28" width="196" height="176" rx="10" fill="none" stroke="#d9e6de" stroke-width="2"/>
+        <rect x="118" y="18" width="92" height="9" rx="4.5" fill="#ffffff" stroke="#cfdfd6" stroke-width="1.5"/>
+        <rect x="392" y="18" width="92" height="9" rx="4.5" fill="#ffffff" stroke="#cfdfd6" stroke-width="1.5"/>
+        <rect x="598" width="58" height="240" fill="#dce9e2"/>
+        <path d="M598 0v240" stroke="#c3d6cb" stroke-width="2"/>
+        <rect x="607" y="34" width="40" height="40" rx="9" fill="#0f7a4d" stroke="#16382a" stroke-width="2.5"/>
+        <path d="M620 46v9M630 46v9M617 55h16v4a6.5 6.5 0 0 1-13 0v-4z" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        <path d="M34 318 150 242M452 318 402 242" stroke="#ffffff" stroke-width="5" stroke-linecap="round" opacity=".7"/>
+        <ellipse cx="250" cy="257" rx="202" ry="9" fill="#14201a" opacity=".12"/>
+        <rect x="477" y="60" width="60" height="98" rx="12" fill="#20362c" stroke="#16382a" stroke-width="3"/>
+        <rect x="487" y="71" width="40" height="31" rx="6" fill="#0d1a14"/>
+        <path d="M510 77l-8.5 12.5h6.3l-3.2 9.5 10.5-13.5h-6.8l3.7-8.5z" fill="#ffd75e"/>
+        <circle cx="507" cy="121" r="7.5" fill="none" stroke="#2fbf71" stroke-width="3"/>
+        <circle class="led" cx="507" cy="121" r="3" fill="#2fbf71"/>
+        <rect x="491" y="138" width="32" height="6" rx="3" fill="#3a5a4c"/>
+        <path d="M507 158c-2 42-22 54-44 43-16-8-35-20-55-30" fill="none" stroke="#16382a" stroke-width="6" stroke-linecap="round"/>
+        <path class="energy" d="M507 158c-2 42-22 54-44 43-16-8-35-20-55-30" fill="none" stroke="#7fe0ae" stroke-width="2" stroke-linecap="round"/>
+        <path d="M58 222c0-17 4-34 16-44 12-10 30-16 54-21l18-3c16-30 44-46 80-48l70-1c34 1 60 17 78 41l30 9c24 5 38 19 40 41l1 26c0 9-6 14-15 14h-28a36 36 0 0 0-72 0H168a36 36 0 0 0-72 0H73c-9 0-15-5-15-14z" fill="#0f7a4d" stroke="#16382a" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M74 178c12-10 30-16 54-21l18-3c16-30 44-46 80-48l70-1c34 1 60 17 78 41l30 9c10 2 18 6 24 12-30-8-70-12-118-12H190c-48 0-86 8-116 23z" fill="#ffffff" opacity=".10"/>
+        <path d="M156 155c12-25 34-37 64-39h24v39zM256 115l38 1c26 2 48 14 64 35l4 4h-106z" fill="#d7eee3" stroke="#16382a" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M252 160v66M357 160l3 66" stroke="#0a4a30" stroke-width="2.5" opacity=".45"/>
+        <rect x="264" y="176" width="20" height="6" rx="3" fill="#0a4a30" opacity=".55"/>
+        <rect x="322" y="176" width="20" height="6" rx="3" fill="#0a4a30" opacity=".55"/>
+        <path d="M96 226h306" stroke="#0a4a30" stroke-width="2.5" opacity=".3" stroke-linecap="round"/>
+        <path d="M425 178c7 1 12 5 13 11-6 3-15 2-19-2 0-5 2-8 6-9z" fill="#ffe9a8" stroke="#d9b84a" stroke-width="1.5"/>
+        <rect x="57" y="182" width="9" height="15" rx="3.5" fill="#e0655f" stroke="#b94a44" stroke-width="1.5"/>
+        <circle cx="405" cy="177" r="8" fill="#0d1a14" stroke="#e9f5ee" stroke-width="2.5"/>
+        <circle cx="405" cy="177" r="3" fill="#2fbf71"/>
+        <g><circle cx="132" cy="236" r="34" fill="#14231c" stroke="#16382a" stroke-width="3"/><circle cx="132" cy="236" r="21" fill="#22362d"/><circle cx="132" cy="236" r="10.5" fill="#e6efe9"/><path d="M132 226v20M122 236h20M125 229l14 14M139 229l-14 14" stroke="#9db8ab" stroke-width="2.5" stroke-linecap="round"/></g>
+        <g><circle cx="366" cy="236" r="34" fill="#14231c" stroke="#16382a" stroke-width="3"/><circle cx="366" cy="236" r="21" fill="#22362d"/><circle cx="366" cy="236" r="10.5" fill="#e6efe9"/><path d="M366 226v20M356 236h20M359 229l14 14M373 229l-14 14" stroke="#9db8ab" stroke-width="2.5" stroke-linecap="round"/></g>
+      </svg>
+    </figure>
+    <div class="hero-stats">
+      <div class="stat"><b>517</b><span data-i18n="stat1">已完成屋苑</span></div>
+      <div class="stat"><b>3</b><span data-i18n="stat2">款充電樁選擇</span></div>
+      <div class="stat"><b>3</b><span data-i18n="stat3">步完成預約</span></div>
+    </div>
+    <nav class="steps" data-i18n-aria="stepsAria" aria-label="步驟">
+      <span class="step-pill active" id="pill1"><i>1</i><span data-i18n="pill1">揀屋苑</span></span>
+      <span class="step-pill" id="pill2"><i>2</i><span data-i18n="pill2">揀充電樁</span></span>
+      <span class="step-pill" id="pill3"><i>3</i><span data-i18n="pill3">預約報價</span></span>
+    </nav>
+  </header>
+
+  <!-- WHY NOW -->
+  <section class="card" id="why">
+    <h2 data-i18n="whyH">公共基建已做好，只差最後一哩</h2>
+    <p class="sub" data-i18n="whySub">唔少車主以為要等屋苑搞掂晒先裝得——其實你屋苑嗰份已經完成，剩低嗰段係屬於你自己車位嘅，唔會有人代你做。</p>
+    <div class="process">
+      <div class="pstep">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.1V12a10 10 0 1 1-5.9-9.1"/><path d="M22 4 12 14l-3-3"/></svg></div>
+        <div><b data-i18n="w1b">公共基建已到位</b><p data-i18n="w1p">停車場嘅配電設備、接線箱同線槽等公共部分，已由屋苑透過「EV屋苑充電易資助計劃」（EHSS）完成，唔使再等屋苑開工或者開會通過。</p></div>
+      </div>
+      <div class="pstep">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg></div>
+        <div><b data-i18n="w2b">最後一哩，裝喺你自己車位</b><p data-i18n="w2p">公共部分以外，每個車位仲要裝返屬於自己嘅充電樁同獨立電錶，先可以喺自己車位充電——呢頁就係幫你開始呢一步。</p></div>
+      </div>
+      <div class="pstep">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+        <div><b data-i18n="w3b">而家就可以開始</b><p data-i18n="w3p">只要你屋苑喺已完成名單入面，就可以預約報價，唔使等下一輪屋苑工程。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 1 -->
+  <section class="card" id="step1">
+    <h2><span class="n">1</span><span data-i18n="s1h">你屋苑裝唔裝得，一查就知</span></h2>
+    <p class="sub" data-i18n="s1sub">全港 517 間屋苑已經完成充電基建，你嗰間好可能就喺入面。打低屋苑名（中文、英文都得），即刻知你車位而家裝唔裝得。</p>
+    <div class="chips" role="group" data-i18n-aria="regionAria" aria-label="地區">
+      <button class="chip" data-region="全部" aria-pressed="true"><span data-i18n="chipAll">全部</span> <small>517</small></button>
+      <button class="chip" data-region="港島" aria-pressed="false"><span data-i18n="chipHK">港島</span> <small>234</small></button>
+      <button class="chip" data-region="九龍" aria-pressed="false"><span data-i18n="chipKLN">九龍</span> <small>110</small></button>
+      <button class="chip" data-region="新界" aria-pressed="false"><span data-i18n="chipNT">新界</span> <small>173</small></button>
+    </div>
+    <div class="searchbox">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="q" type="search" data-i18n-ph="searchPh" data-i18n-aria="searchAria" placeholder="例如：海怡半島、海怡、South Horizons…" autocomplete="off" aria-label="搜尋屋苑">
+    </div>
+    <div class="results" id="results" role="listbox" data-i18n-aria="resultsAria" aria-label="屋苑結果"></div>
+
+    <div class="selected-box" id="selectedBox">
+      <div class="row">
+        <div><span data-i18n="selLabel">✅ 已揀選</span><br><b id="selectedName"></b><br><span id="selectedMeta" style="font-size:13px"></span></div>
+        <button class="link-btn" id="clearEstate" type="button" data-i18n="change">更改</button>
+      </div>
+    </div>
+
+    <div class="notfound" id="notFound">
+      <b data-i18n="nfB">搵唔到你屋苑？</b><br>
+      <span data-i18n="nfP">如果你屋苑唔喺已完成名單，可能基建仍在施工或未獲批——唔好當裝得。你仍然可以喺下面留低屋苑名預約報價，我哋會幫你核對最新狀態。</span>
+      <div style="margin-top:10px"><button class="link-btn" id="useCustom" type="button" style="padding:0" data-i18n="nfBtn">→ 用自填屋苑名繼續預約報價</button></div>
+    </div>
+  </section>
+
+  <!-- STEP 2 -->
+  <section class="card" id="step2">
+    <h2><span class="n">2</span><span data-i18n="s2h">揀充電樁</span></h2>
+    <p class="sub" data-i18n="s2sub">唔肯定揀邊款？大部份私家車主揀 7kW 過夜慢充已經夠用；最終規格會喺現場評估時按你車位供電再確認。</p>
+    <div class="charger-visual">
+      <svg viewBox="0 0 160 190" role="img" data-i18n-aria="chargerArtAlt" aria-label="插圖：掛牆充電樁特寫，充電槍連住充電線">
+        <circle cx="80" cy="94" r="80" fill="#e7f2ec"/>
+        <ellipse cx="80" cy="180" rx="50" ry="6" fill="#14201a" opacity=".12"/>
+        <rect x="37" y="12" width="86" height="132" rx="18" fill="#20362c" stroke="#16382a" stroke-width="3"/>
+        <rect x="46" y="21" width="68" height="114" rx="12" fill="#27463a"/>
+        <circle cx="80" cy="55" r="20" fill="#0d1a14" stroke="#2fbf71" stroke-width="3.5"/>
+        <path d="M84 42l-10 14.5h6.8L77.5 67 90 50h-7.5l4.5-8z" fill="#ffd75e"/>
+        <rect x="57" y="87" width="46" height="25" rx="5" fill="#0d1a14" stroke="#3a5a4c" stroke-width="1.5"/>
+        <rect x="63" y="102" width="8" height="6" rx="1.5" fill="#2fbf71"/><rect x="76" y="98" width="8" height="10" rx="1.5" fill="#2fbf71"/><rect x="89" y="93" width="8" height="15" rx="1.5" fill="#2fbf71"/>
+        <circle class="led" cx="80" cy="125" r="4" fill="#2fbf71"/>
+        <path d="M80 144c0 20-12 27-24 22" fill="none" stroke="#16382a" stroke-width="5.5" stroke-linecap="round"/>
+        <path d="M112 96c13 3 17 12 16 26l-2 20" fill="none" stroke="#16382a" stroke-width="5.5" stroke-linecap="round"/>
+        <rect x="117" y="66" width="18" height="38" rx="7" fill="#14231c" stroke="#16382a" stroke-width="2.5"/>
+        <path d="M122 57v9M130 57v9" stroke="#16382a" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <b data-i18n="cvB">裝喺你車位牆身，一插即充</b>
+        <p data-i18n="cvP">充電樁就係一部掛牆嘅充電盒，駁住你車位嘅供電。返到屋企插上充電槍，瞓醒就充滿，唔使再去公用充電站排隊等位。</p>
+      </div>
+    </div>
+    <div class="chargers" id="chargers">
+      <label class="charger" data-id="7kw">
+        <input type="radio" name="charger" value="7kW 單相充電樁">
+        <span class="rec" data-i18n="rec">最常用</span>
+        <svg class="cglyph" viewBox="0 0 36 42" aria-hidden="true"><rect x="5" y="2" width="26" height="34" rx="6" fill="#20362c" stroke="#16382a" stroke-width="2"/><path d="M20 9l-6 9h4.5L16 25l8-10h-5l3-6z" fill="#ffd75e"/><path d="M18 36c0 4 2 5 6 5" fill="none" stroke="#1d2b24" stroke-width="2.5" stroke-linecap="round"/></svg>
+        <div class="kw">7<small> kW</small></div>
+        <div class="phase" data-i18n="c7phase">單相 · 家用慢充</div>
+        <ul>
+          <li data-i18n="c7a">約 1 小時充 30–40 公里續航</li>
+          <li data-i18n="c7b">過夜 8 小時，足夠日常通勤</li>
+          <li data-i18n="c7c">適合大部份屋苑車位供電</li>
+        </ul>
+      </label>
+      <label class="charger" data-id="11kw">
+        <input type="radio" name="charger" value="11kW 三相充電樁">
+        <svg class="cglyph" viewBox="0 0 36 42" aria-hidden="true"><rect x="5" y="2" width="26" height="34" rx="6" fill="#20362c" stroke="#16382a" stroke-width="2"/><path d="M20 9l-6 9h4.5L16 25l8-10h-5l3-6z" fill="#ffd75e"/><path d="M18 36c0 4 2 5 6 5" fill="none" stroke="#1d2b24" stroke-width="2.5" stroke-linecap="round"/></svg>
+        <div class="kw">11<small> kW</small></div>
+        <div class="phase" data-i18n="c11phase">三相 · 中速</div>
+        <ul>
+          <li data-i18n="c11a">約 1 小時充 50–60 公里續航</li>
+          <li data-i18n="c11b">適合每日行駛里數較高嘅車主</li>
+          <li data-i18n="c11c">車位需有三相供電，先評估確認</li>
+        </ul>
+      </label>
+      <label class="charger" data-id="22kw">
+        <input type="radio" name="charger" value="22kW 三相充電樁">
+        <svg class="cglyph" viewBox="0 0 36 42" aria-hidden="true"><rect x="5" y="2" width="26" height="34" rx="6" fill="#20362c" stroke="#16382a" stroke-width="2"/><path d="M20 9l-6 9h4.5L16 25l8-10h-5l3-6z" fill="#ffd75e"/><path d="M18 36c0 4 2 5 6 5" fill="none" stroke="#1d2b24" stroke-width="2.5" stroke-linecap="round"/></svg>
+        <div class="kw">22<small> kW</small></div>
+        <div class="phase" data-i18n="c22phase">三相 · 最快家用</div>
+        <ul>
+          <li data-i18n="c22a">約 1 小時充 100 公里以上續航</li>
+          <li data-i18n="c22b">適合支援 22kW 交流充電嘅車款</li>
+          <li data-i18n="c22c">供電要求最高，必須先做評估</li>
+        </ul>
+      </label>
+    </div>
+    <p class="price-note" data-i18n-html="priceNote">💰 <b>價錢點計？</b> 每個車位嘅走線距離同供電情況都唔同，所以唔會喺度寫死一個價——<b>現場評估後報價</b>，報價確認先施工，唔會中途加價呃你。</p>
+  </section>
+
+  <!-- STEP 3 -->
+  <section class="card" id="step3">
+    <h2><span class="n">3</span><span data-i18n="s3h">一撳 WhatsApp 預約報價</span></h2>
+    <p class="sub" data-i18n="s3sub">填埋車位編號（可選），下面會即時砌好預約報價訊息，一撳即開 WhatsApp 傳送，唔使自己打字。</p>
+    <div class="field">
+      <label for="parking" data-i18n="parkingLabel">車位編號（可選）</label>
+      <input id="parking" type="text" data-i18n-ph="parkingPh" placeholder="例如：B2 層 128 號車位" autocomplete="off">
+    </div>
+    <div class="field">
+      <label data-i18n="previewLabel">預約報價訊息預覽</label>
+      <div class="msg-preview" id="msgPreview">請先完成步驟 1（揀屋苑）同步驟 2（揀充電樁），訊息會自動生成。</div>
+    </div>
+    <div class="cta-row">
+      <button class="btn btn-wa" id="waBtn" type="button" disabled>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.4 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.4-.7-2.9-1.2-4.7-4.1-4.9-4.3-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.4 1.8 2.2 1.2 1.1 2.3 1.5 2.6 1.6.3.1.5.1.7-.1l1-1.2c.2-.3.4-.2.7-.1l2.1 1c.3.2.5.3.6.4 0 .1 0 .7-.2 1.2z"/></svg>
+        <span data-i18n="waBtn">用 WhatsApp 預約報價</span>
+      </button>
+      <button class="btn btn-copy" id="copyBtn" type="button" disabled data-i18n="copyBtn">複製訊息</button>
+    </div>
+    <p class="hint" data-i18n="hint">按下 WhatsApp 按鈕會開分享版面俾你揀聯絡人傳送；唔用 WhatsApp 都得，可以先複製訊息，再貼去你慣用嘅平台傳送。</p>
+  </section>
+
+  <!-- REGISTERED ELECTRICIAN -->
+  <section class="card">
+    <div class="trust-flex">
+      <svg viewBox="0 0 220 230" role="img" data-i18n-aria="elecArtAlt" aria-label="插圖：戴安全帽、著反光背心嘅註冊電工，拎住寫有 WR1 嘅完工證明文件">
+        <circle cx="110" cy="114" r="98" style="fill:var(--accent-soft)"/>
+        <circle cx="110" cy="114" r="98" fill="none" stroke="#16382a" stroke-width="2" opacity=".14"/>
+        <rect x="152" y="194" width="54" height="30" rx="6" fill="#51615a" stroke="#16382a" stroke-width="2.5"/>
+        <path d="M165 194v-5a14 7 0 0 1 28 0v5" fill="none" stroke="#16382a" stroke-width="3"/>
+        <rect x="174" y="204" width="10" height="8" rx="2" fill="#d9e2dc"/>
+        <path d="M90 164h15v40H90zM117 164h15v40h-15z" fill="#2e3d36" stroke="#16382a" stroke-width="2.5"/>
+        <ellipse cx="96" cy="208" rx="12" ry="5" fill="#14201a"/>
+        <ellipse cx="126" cy="208" rx="12" ry="5" fill="#14201a"/>
+        <path d="M78 98c-9 15-13 32-10 50l13 3c-1-16 1-31 6-44z" fill="#24503c" stroke="#16382a" stroke-width="2.5" stroke-linejoin="round"/>
+        <rect x="54" y="141" width="13" height="23" rx="5" fill="#eec39b" stroke="#16382a" stroke-width="2"/>
+        <path d="M58 166l13 9-4 6-13-10zM70 173l9-3-15-10-4 5z" fill="#8b98a5" stroke="#16382a" stroke-width="1.8" stroke-linejoin="round"/>
+        <rect x="75" y="86" width="71" height="84" rx="12" fill="#24503c" stroke="#16382a" stroke-width="2.5"/>
+        <path d="M75 99l19-10v81H83a8 8 0 0 1-8-8zM146 99l-19-10v81h11a8 8 0 0 0 8-8z" fill="#2fbf71"/>
+        <rect x="75" y="123" width="71" height="8" fill="#eef5f1" opacity=".95"/>
+        <rect x="95" y="89" width="7" height="36" fill="#eef5f1" opacity=".95"/>
+        <rect x="119" y="89" width="7" height="36" fill="#eef5f1" opacity=".95"/>
+        <rect x="117" y="139" width="16" height="20" rx="2.5" fill="#fff" stroke="#16382a" stroke-width="1.8"/>
+        <circle cx="125" cy="146.5" r="3.4" fill="#5b6b62"/>
+        <path d="M120.5 153.5h9M120.5 156.8h9" stroke="#5b6b62" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M143 97c10 5 16 14 19 27l-12 4c-3-10-7-18-13-24z" fill="#24503c" stroke="#16382a" stroke-width="2.5" stroke-linejoin="round"/>
+        <rect x="151" y="119" width="13" height="23" rx="5" fill="#eec39b" stroke="#16382a" stroke-width="2"/>
+        <g transform="rotate(6 172 88)">
+          <rect x="150" y="58" width="44" height="58" rx="5" fill="#8a6b46" stroke="#16382a" stroke-width="2.5"/>
+          <rect x="154.5" y="62.5" width="35" height="49" rx="2" fill="#fff"/>
+          <rect x="163" y="55" width="18" height="8" rx="3.5" fill="#51615a" stroke="#16382a" stroke-width="1.8"/>
+          <text x="172" y="83" text-anchor="middle" font-family="Archivo,sans-serif" font-size="12" font-weight="800" fill="#14201a">WR1</text>
+          <path d="M160 91h24M160 97h24" stroke="#b9c6be" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="172" cy="106" r="6" fill="#0f7a4d"/>
+          <path d="M169.2 106l2.3 2.3 3.8-4.2" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <circle cx="110" cy="58" r="20" fill="#eec39b" stroke="#16382a" stroke-width="2.5"/>
+        <path d="M103 60h.1M117 60h.1" stroke="#14201a" stroke-width="3.4" stroke-linecap="round"/>
+        <path d="M103.5 68.5q6.5 4.5 13 0" stroke="#14201a" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <path d="M87.5 54a22.5 18 0 0 1 45 0z" fill="#f6bd45" stroke="#16382a" stroke-width="2.5"/>
+        <rect x="82" y="52" width="56" height="7" rx="3.5" fill="#efa92e" stroke="#16382a" stroke-width="2.5"/>
+        <rect x="104" y="38.5" width="12" height="9" rx="3" fill="#efa92e" stroke="#16382a" stroke-width="2.5"/>
+      </svg>
+      <div>
+        <h2 data-i18n="trustH">註冊電工施工，完工有證明</h2>
+        <p data-i18n="trustP">安裝唔係求其駁線：由註冊電業承辦商嘅註冊電工負責施工，完工後你會收到 WR1 完工證明留底，證明成套電力裝置合規完成——日後管理處或者保險問起，都有文件喺手，唔使口同鼻拗。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="card">
+    <h2 data-i18n="faqH">常見問題</h2>
+    <details>
+      <summary data-i18n="q1">我屋苑唔喺名單，係唔係裝唔到？</summary>
+      <p data-i18n="a1">唔一定。呢頁只列 EHSS 已完成基建嘅屋苑，係最快可以落單嘅一批。唔喺名單可能係施工中或者已獲批未開工。不過非 EHSS 屋苑可能需要更長時間評估，甚至要等屋苑整體方案先裝到，唔可以即刻當裝得；你可以照樣預約報價，我哋會先幫你核對狀態再答你。</p>
+    </details>
+    <details>
+      <summary data-i18n="q2">點解冇標價？幾時先知要幾錢？</summary>
+      <p data-i18n="a2">因為每個車位走線距離、供電容量都唔同，寫死一個價只會誤導。流程係先做現場評估，再出正式報價，你確認先施工。</p>
+    </details>
+    <details>
+      <summary data-i18n="q3">7kW 同 22kW 點揀？</summary>
+      <p data-i18n="a3">夜晚泊車充電為主、每日行幾十公里，7kW 已經夠。架車支援三相快充、每日里數高，先考慮 11kW 或 22kW——但要先確認車位有冇三相供電，評估時會一併覆核。</p>
+    </details>
+    <details>
+      <summary data-i18n="q4">WR1 係咩？點解重要？</summary>
+      <p data-i18n="a4">WR1 係完工證明，證明電力裝置已合規完成。冇 WR1 嘅安裝唔合規，管理處同保險都可能唔認；完成安裝後你會收到呢份證明作記錄。</p>
+    </details>
+    <details>
+      <summary data-i18n="q5">管理處批唔批，點查？</summary>
+      <p data-i18n="a5">先向管理處問清楚：你屋苑有冇既定嘅申請程序同指定要求，按程序交文件先唔會行冤枉路。交咗文件之後，要分開兩段時間睇——屋苑自己嘅審批係一段，電力公司嘅批核係另一段，唔好混為一談；電力公司嘅書面回覆一般約需 4 至 6 星期。</p>
+    </details>
+    <details>
+      <summary data-i18n="q6">價錢點解差咁遠？</summary>
+      <p data-i18n="a6">因為每個報價其實係幾項加埋：充電樁機價、基本安裝、拉線、電力升級（如需要）同代辦，逐項唔同，總數自然差得遠。EHSS 已完成基建嘅屋苑，一般屬於短接駁一類，工程相對簡單；但每個車位嘅走線同供電始終唔同，最終仍以現場評估後報價為準。</p>
+    </details>
+    <details>
+      <summary data-i18n="q7">租車位裝唔裝得？</summary>
+      <p data-i18n="a7">可以考慮，但要先取得車位業主同意先可以裝，唔好自己話事。另外，退租或者業主日後賣車位嗰陣，充電設備點安排，要喺評估時一併問清、講明，免得之後拗數。</p>
+    </details>
+    <details>
+      <summary data-i18n="q8">點解要獨立電錶？</summary>
+      <p data-i18n="a8">獨立電錶將 EV 充電用電同屋企用電分開計，充電嗰部分唔會推高屋企電費嘅累進收費級別。而且裝咗獨立電錶之後，先有資格申請分時段電價；申請要預早提出，一般要提前約一個月。</p>
+    </details>
+    <details>
+      <summary data-i18n="q9">我架車用唔用得盡 11kW／22kW？</summary>
+      <p data-i18n="a9">未必用得盡——好多車只支援單相充電，就算裝咗三相充電樁都用唔盡佢嘅功率。如果主要係夜晚過夜充，7kW 多數已經夠用。真係想揀三相，要先確認你車位有冇三相供電，評估時會一併覆核。</p>
+    </details>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="card" style="text-align:center">
+    <h2 style="justify-content:center" data-i18n="finalH">你屋苑已經準備好，差你嗰一步</h2>
+    <p class="sub" style="margin-bottom:18px" data-i18n="finalSub">查到你屋苑喺名單入面，就可以即刻開始：揀好充電樁，一撳預約報價，之後安安樂樂喺自己車位過夜充電，唔使再同人爭公用充電位。</p>
+    <a class="hero-cta" href="#step1" style="margin:0" data-i18n="finalCta">即刻查屋苑，預約報價 ↓</a>
+  </section>
+
+  <footer data-i18n-html="footer">
+    屋苑名單來源：EV屋苑充電易資助計劃（EHSS）2026 年 8 月版已完成名單 · 共 517 間 · 2026-10-30 核對<br>
+    充電速度為約數，實際規格以現場評估為準；價錢一律現場評估後報價。
+  </footer>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+var ESTATES = [{"en":"Aqua 33","zh":"----","region":"港島"},{"en":"The Hampton","zh":"----","region":"港島"},{"en":"The Harbourside","zh":"君臨天下","region":"九龍"},{"en":"The Avenue","zh":"---- 囍匯","region":"港島"},{"en":"Grand Deco Tower Carpark","zh":"---- 帝后臺停車場","region":"港島"},{"en":"Dynasty Court","zh":"---- 帝景園","region":"港島"},{"en":"Elegant Terrace","zh":"---- 慧明苑","region":"港島"},{"en":"La Mer","zh":"---- 浪頤居","region":"港島"},{"en":"CASA 880","zh":"","region":"港島"},{"en":"La Hacienda","zh":"","region":"港島"},{"en":"Y.I","zh":"","region":"港島"},{"en":"Serenade","zh":"上林","region":"港島"},{"en":"Century Towers","zh":"世紀大廈","region":"港島"},{"en":"Tanner Garden","zh":"丹拿花園","region":"港島"},{"en":"Scholastic Garden","zh":"俊傑花園","region":"港島"},{"en":"Lyttelton Garden","zh":"俊賢花園","region":"港島"},{"en":"Ewan Court","zh":"倚雲閣","region":"港島"},{"en":"Dragon Pride","zh":"傲龍軒","region":"港島"},{"en":"Yick King Building","zh":"億景樓","region":"港島"},{"en":"The Elegance Car Park","zh":"優雅閣停車場","region":"港島"},{"en":"Sunrise Court","zh":"兆暉閣","region":"港島"},{"en":"Regent Court","zh":"利群閣","region":"港島"},{"en":"Comfort Heights","zh":"創福苑","region":"港島"},{"en":"Silverwood","zh":"力生軒","region":"港島"},{"en":"Caroline Garden","zh":"加路連花園","region":"港島"},{"en":"Sheffield Garden","zh":"勝豐園","region":"港島"},{"en":"Winsome Park","zh":"匯豪閣","region":"港島"},{"en":"Billion Terrace","zh":"千葉居","region":"港島"},{"en":"South Bay Palace Tower II","zh":"南灣御苑第二座","region":"港島"},{"en":"47A Stubbs Road","zh":"司徒拔道 47A","region":"港島"},{"en":"The Legend","zh":"名門","region":"港島"},{"en":"Conduit Tower","zh":"君德閣","region":"港島"},{"en":"Grand Garden (Sai Wan Ho)","zh":"君悅軒","region":"港島"},{"en":"Kennedy Park At Central","zh":"君珀","region":"港島"},{"en":"Provident Centre","zh":"和富中心","region":"港島"},{"en":"Glory Heights","zh":"嘉和苑","region":"港島"},{"en":"Prosperous Height","zh":"嘉富臺","region":"港島"},{"en":"Gardenview Heights","zh":"嘉景臺","region":"港島"},{"en":"Woodbury Court","zh":"嘉林閣","region":"港島"},{"en":"Smithfield Terrace","zh":"嘉輝花園","region":"港島"},{"en":"Le Cachet","zh":"嘉逸軒","region":"港島"},{"en":"Cavendish Heights (Block 1 - 7)","zh":"嘉雲臺 (第一至七座)","region":"港島"},{"en":"Cavendish Heights (Block 8)","zh":"嘉雲臺 (第八座)","region":"港島"},{"en":"Ruby Court","zh":"嘉麟閣","region":"港島"},{"en":"Tregunter","zh":"地利根德閣","region":"港島"},{"en":"No.1 Tai Hang Road","zh":"大坑道一號","region":"港島"},{"en":"Trafalgar Court","zh":"大寶閣","region":"港島"},{"en":"Hollywood Heights","zh":"好利閣","region":"港島"},{"en":"Fortune Building","zh":"好運樓","region":"港島"},{"en":"Victoria Heights","zh":"威利閣","region":"港島"},{"en":"Viking Villas","zh":"威景台停車場","region":"港島"},{"en":"Wealthy Heights","zh":"威豪閣","region":"港島"},{"en":"Hilary Court","zh":"學林雅軒","region":"港島"},{"en":"Fulham Garden","zh":"富林苑","region":"港島"},{"en":"Flora Garden (Cloud View Road)","zh":"富麗園 (雲景道)","region":"港島"},{"en":"Po Garden","zh":"寶園","region":"港島"},{"en":"Po Yue Yuk Building","zh":"寶如玉大廈","region":"港島"},{"en":"Bo Fung Gardens","zh":"寶峯園","region":"港島"},{"en":"Borrett Mansions","zh":"寶德臺","region":"港島"},{"en":"Birchwood Place","zh":"寶樺臺","region":"港島"},{"en":"No.1 Po Shan Road","zh":"寶珊道一號","region":"港島"},{"en":"Fairlane Tower","zh":"寶雲山莊","region":"港島"},{"en":"Bowen Place (Bowen Road)","zh":"寶雲閣 (寶雲道)","region":"港島"},{"en":"The Zenith (Block 2 & 3)","zh":"尚翹峰 (第 2、3 座)","region":"港島"},{"en":"Shan Kwong Court","zh":"山光樓","region":"港島"},{"en":"Hilltop","zh":"峰景大廈","region":"港島"},{"en":"Queen's Terrace","zh":"帝后華庭","region":"港島"},{"en":"Regent Palisades","zh":"帝柏園","region":"港島"},{"en":"Imperial Court","zh":"帝豪閣","region":"港島"},{"en":"Skyline Mansion (Phase 1)","zh":"年豐園 (第一期)","region":"港島"},{"en":"Linden Height","zh":"年達園","region":"港島"},{"en":"Tropicana Court","zh":"康南閣","region":"港島"},{"en":"Kornhill","zh":"康怡花園","region":"港島"},{"en":"Fortress Metro Tower","zh":"康澤花園","region":"港島"},{"en":"Greenwood Terrace (Chai Wan)","zh":"康翠臺 (柴灣)","region":"港島"},{"en":"Carnation Court","zh":"康馨園","region":"港島"},{"en":"Cornell Court, Cornwall Court & Cumine Court","zh":"康麗苑，康和苑及康明苑","region":"港島"},{"en":"Lime Habitat","zh":"形品","region":"港島"},{"en":"Villas Sorrento","zh":"御海園","region":"港島"},{"en":"Regent On The Park","zh":"御花園","region":"港島"},{"en":"Woodland Heights","zh":"怡園","region":"港島"},{"en":"Mount Davis 33","zh":"怡峯","region":"港島"},{"en":"Greenery Garden","zh":"怡林閣","region":"港島"},{"en":"Elm Tree Towers","zh":"愉富大廈","region":"港島"},{"en":"Oi Kwan Court","zh":"愛群閣","region":"港島"},{"en":"Flora Garden (Chun Fai Road)","zh":"慧景園 (春暉道)","region":"港島"},{"en":"Wisdom Court","zh":"慧苑","region":"港島"},{"en":"Vantage Park","zh":"慧豪閣","region":"港島"},{"en":"Wilshire Towers","zh":"慧雅閣","region":"港島"},{"en":"La Place De Victoria","zh":"慧雲峯","region":"港島"},{"en":"Seymour","zh":"懿峯","region":"港島"},{"en":"Scenecliff","zh":"承德山莊","region":"港島"},{"en":"Skyscraper","zh":"摩天大廈","region":"港島"},{"en":"Morengo Court","zh":"昍逵閣","region":"港島"},{"en":"Ming Lai Court","zh":"明麗閣","region":"港島"},{"en":"The Oakridge","zh":"星灣峯","region":"港島"},{"en":"The Nova","zh":"星鑽","region":"港島"},{"en":"The Signature","zh":"春暉 8 號","region":"港島"},{"en":"Greenview Gardens (Robinson Road)","zh":"景翠園 (羅便臣道)","region":"港島"},{"en":"Panorama Gardens","zh":"景雅花園","region":"港島"},{"en":"Hillsborough Court","zh":"曉峰閣","region":"港島"},{"en":"Heng Fa Villa","zh":"杏花園","region":"港島"},{"en":"The Pavilia Hill","zh":"柏傲山","region":"港島"},{"en":"No.2 Park Road","zh":"柏道 2 號","region":"港島"},{"en":"Park Garden","zh":"栢園","region":"港島"},{"en":"Broadwood Park","zh":"栢樂苑","region":"港島"},{"en":"Butler Tower","zh":"栢麗園","region":"港島"},{"en":"May Lam Mansion","zh":"梅林大廈","region":"港島"},{"en":"May Tower","zh":"梅苑","region":"港島"},{"en":"Pine Villa (Lok Yuen Path)","zh":"樂園徑松翠小築","region":"港島"},{"en":"Broadwood Twelve","zh":"樂天峯","region":"港島"},{"en":"Villa Rocha","zh":"樂翠台","region":"港島"},{"en":"Villa Lotto","zh":"樂陶苑","region":"港島"},{"en":"Flourish Court","zh":"殷榮閣","region":"港島"},{"en":"Blessings Garden (Phase 2)","zh":"殷樺花園二期","region":"港島"},{"en":"Yukon Court","zh":"殷豪閣","region":"港島"},{"en":"Beverly Hill","zh":"比華利山","region":"港島"},{"en":"Wing Way Court","zh":"永威閣","region":"港島"},{"en":"Winfield Gardens","zh":"永富苑","region":"港島"},{"en":"Wing Fook Court","zh":"永福閣","region":"港島"},{"en":"The Merton (Block 1 & 2)","zh":"泓都 (第 1 及 2 座)","region":"港島"},{"en":"The Merton (Block 3)","zh":"泓都 (第 3 座)","region":"港島"},{"en":"Wun Sha Tower","zh":"浣紗花園","region":"港島"},{"en":"Pacific View","zh":"浪琴園","region":"港島"},{"en":"Sky Horizon","zh":"海天峰","region":"港島"},{"en":"South Horizons (Phase 1)","zh":"海怡半島 (第一期)","region":"港島"},{"en":"South Horizons (Phase 3)","zh":"海怡半島 (第三期)","region":"港島"},{"en":"South Horizons (Phase 2)","zh":"海怡半島 (第二期)","region":"港島"},{"en":"South Horizons (Phase 4)","zh":"海怡半島 (第四期)","region":"港島"},{"en":"Beach Pointe","zh":"海灣閣","region":"港島"},{"en":"Marinella","zh":"深灣 9 號","region":"港島"},{"en":"Sham Wan Towers","zh":"深灣軒","region":"港島"},{"en":"No.3 Repulse Bay Road","zh":"淺水灣道 3 號","region":"港島"},{"en":"No.56 Repulse Bay Road","zh":"淺水灣道 56 號","region":"港島"},{"en":"Bayview","zh":"港圖灣","region":"港島"},{"en":"Waterfront South","zh":"港麗豪園停車場","region":"港島"},{"en":"Moon Fair Mansion","zh":"滿輝大廈","region":"港島"},{"en":"Yukon Heights","zh":"煜康台","region":"港島"},{"en":"Amber Garden","zh":"珀苑","region":"港島"},{"en":"The Warren","zh":"瑆華","region":"港島"},{"en":"55 Conduit Road","zh":"璈珀","region":"港島"},{"en":"Kingsford Height","zh":"瓊峰台","region":"港島"},{"en":"Kingsford Gardens","zh":"瓊峰園","region":"港島"},{"en":"Kenville Building","zh":"甘苑","region":"港島"},{"en":"Park Mansions","zh":"百年順大廈","region":"港島"},{"en":"3-4 Yik Kwan Avenue","zh":"益群道 3-4 號","region":"港島"},{"en":"Baguio Villa (Block 16 - 18)","zh":"碧瑤灣 (16 - 18 座)","region":"港島"},{"en":"Baguio Villa (Block 19 - 24)","zh":"碧瑤灣 (19 - 24 座)","region":"港島"},{"en":"Baguio Villa (Block 25 - 27)","zh":"碧瑤灣 (25 - 27 座)","region":"港島"},{"en":"Baguio Villa (Block 28 - 31)","zh":"碧瑤灣 (28 - 31 座)","region":"港島"},{"en":"Baguio Villa (Block 32 - 40)","zh":"碧瑤灣 (32 - 40 座)","region":"港島"},{"en":"Baguio Villa (Block 45 - 48)","zh":"碧瑤灣 (45 - 48 座)","region":"港島"},{"en":"Piccadilly Mansion","zh":"碧苑大廈","region":"港島"},{"en":"Bellevue Heights","zh":"碧蘭閣","region":"港島"},{"en":"Scenic Garden","zh":"福苑","region":"港島"},{"en":"The Leighton Hill","zh":"禮頓山","region":"港島"},{"en":"Serene Court (Kotewall Road)","zh":"秀麗閣 (旭龢道)","region":"港島"},{"en":"Jolly Villa","zh":"竹麗苑","region":"港島"},{"en":"The Altitude","zh":"紀雲峰","region":"港島"},{"en":"Waiga Mansion","zh":"維基樓","region":"港島"},{"en":"Island Crest","zh":"縉城峰","region":"港島"},{"en":"80 Robinson Road","zh":"羅便臣道 80 號","region":"港島"},{"en":"No.1 Robinson Road","zh":"羅便臣道一號","region":"港島"},{"en":"Greenland Garden","zh":"翠林花園","region":"港島"},{"en":"University Heights","zh":"翰林軒","region":"港島"},{"en":"Silvercrest","zh":"聚安樓","region":"港島"},{"en":"Palm Court","zh":"聚安閣","region":"港島"},{"en":"Royal Garden","zh":"聚豪居","region":"港島"},{"en":"Realty Gardens (London Court & Paris Court)","zh":"聯邦花園 (倫敦閣及巴黎閣)","region":"港島"},{"en":"Realty Gardens (Venice Court, Rome Court & Vienna Court)","zh":"聯邦花園 (威尼斯閣，羅馬 閣及維也納閣)","region":"港島"},{"en":"No.8 Shiu Fai Terrace Car Park","zh":"肇輝臺 8 號停車場","region":"港島"},{"en":"Wah Fung Mansion","zh":"華峯樓","region":"港島"},{"en":"Grand Garden (Repulse Bay)","zh":"華景園","region":"港島"},{"en":"Happy View Court","zh":"華景閣","region":"港島"},{"en":"Greenwood Terrace (Eastern Carpark)","zh":"華翠園 (東翼)","region":"港島"},{"en":"Greenwood Terrace (Western Carpark)","zh":"華翠園 (西翼)","region":"港島"},{"en":"Maiden Court","zh":"萬德閣","region":"港島"},{"en":"Visalia Garden","zh":"蔚山花園","region":"港島"},{"en":"The Brentwood","zh":"蔚峰園","region":"港島"},{"en":"Peaksville","zh":"蔚巒閣","region":"港島"},{"en":"Azura","zh":"蔚然","region":"港島"},{"en":"Celeste Court","zh":"蔚雲閣","region":"港島"},{"en":"Blue Pool Court","zh":"藍塘別墅","region":"港島"},{"en":"Harmony Court","zh":"融園大廈","region":"港島"},{"en":"Y. Y. Mansion","zh":"裕仁大廈","region":"港島"},{"en":"Stubbs Villa","zh":"詩濤花園","region":"港島"},{"en":"Merry Garden","zh":"豐樂新邨","region":"港島"},{"en":"Albron Court","zh":"豐樂閣","region":"港島"},{"en":"Royalton","zh":"豪峰","region":"港島"},{"en":"Royalton II","zh":"豪峰二期","region":"港島"},{"en":"Ho King View","zh":"豪景","region":"港島"},{"en":"Robinson Crest","zh":"賓士花園","region":"港島"},{"en":"Braemar Hill Mansions","zh":"賽西湖大廈","region":"港島"},{"en":"Glory Mansion","zh":"輝煌大廈","region":"港島"},{"en":"Faber Villa","zh":"輝百苑","region":"港島"},{"en":"Excelsior Court","zh":"輝鴻閣","region":"港島"},{"en":"The Floridian","zh":"逸意居","region":"港島"},{"en":"The Orchards","zh":"逸樺園","region":"港島"},{"en":"Les Saisons","zh":"逸濤灣","region":"港島"},{"en":"San Francisco Towers","zh":"金山花園","region":"港島"},{"en":"Sakura Court","zh":"金櫻閣","region":"港島"},{"en":"Coronet Court","zh":"錦珊園","region":"港島"},{"en":"Kenyon Court","zh":"錦翠園","region":"港島"},{"en":"Mirror Marina","zh":"鑑波樓","region":"港島"},{"en":"Broadview Terrace","zh":"雅景臺","region":"港島"},{"en":"Avalon (Tai Hang Road)","zh":"雅景軒 (大坑道)","region":"港島"},{"en":"Beauty Court (Robinson Road)","zh":"雅苑 (羅便臣道)","region":"港島"},{"en":"The Albany","zh":"雅賓利大廈","region":"港島"},{"en":"Bon Point","zh":"雍慧閣","region":"港島"},{"en":"St. Louis Mansion","zh":"雨時大廈","region":"港島"},{"en":"Summit Court","zh":"雲峯大廈","region":"港島"},{"en":"Evelyn Towers","zh":"雲景臺","region":"港島"},{"en":"Beverley Heights","zh":"雲景道富豪閣","region":"港島"},{"en":"Winfield Building","zh":"雲暉大廈","region":"港島"},{"en":"Radcliffe","zh":"靖林","region":"港島"},{"en":"Island Garden","zh":"香島","region":"港島"},{"en":"Aberdeen Centre (Site 3) Kwun Hoi Court, Kwun Chiu Court, Kwun King Court","zh":"香港仔中心第三期觀海閣， 觀潮閣，觀景閣","region":"港島"},{"en":"Aberdeen Centre (Site 2) Mei Kwong Court, Mei Fai Court, Mei Fung Court","zh":"香港仔中心第二期美光閣， 美輝閣，美豐閣","region":"港島"},{"en":"Aberdeen Centre (Site 5) Hoi Tsing Court, Hoi Ying Court, Hoi Tin Court, Hoi Lung Court","zh":"香港仔中心第五期海晶閣， 海瑩閣，海天閣，海龍閣","region":"港島"},{"en":"Aberdeen Centre (Site 4) Hoi Chun Court, Hoi Chu Court, Hoi Shan Court, Hoi Wu Court","zh":"香港仔中心第四期海珍閣， 海珠閣，海珊閣，海湖閣","region":"港島"},{"en":"Valiant Park","zh":"駿豪閣","region":"港島"},{"en":"Royal Court","zh":"騰黃閣","region":"港島"},{"en":"Manhattan Heights","zh":"高逸華軒","region":"港島"},{"en":"Goldwin Heights","zh":"高雲臺","region":"港島"},{"en":"Lei King Wan (Site A)","zh":"鯉景灣 (A 期)","region":"港島"},{"en":"Lei King Wan (Site B)","zh":"鯉景灣 (B 期)","region":"港島"},{"en":"Lei King Wan (Site C)","zh":"鯉景灣 (C 期)","region":"港島"},{"en":"Lei King Wan (Site D)","zh":"鯉景灣 (D 期)","region":"港島"},{"en":"Phoenix Court (Mid-levels Central)","zh":"鳳凰閣","region":"港島"},{"en":"MacDonnell House (MacDonnell Road)","zh":"麥當勞大廈 (麥當勞道)","region":"港島"},{"en":"Dragon Garden","zh":"龍園","region":"港島"},{"en":"Dragon View (Macdonnell Road)","zh":"龍景樓 (麥當勞道)","region":"港島"},{"en":"Ronsdale Garden","zh":"龍華花園","region":"港島"},{"en":"Dragonview Court (Kotewall Road)","zh":"龍騰閣 (旭龢道)","region":"港島"},{"en":"Dragon Court (Waterloo Road)","zh":"龍騰閣 (窩打老道)","region":"港島"},{"en":"Dunbar Place","zh":"----","region":"九龍"},{"en":"Casa Bella","zh":"---- 寶華軒","region":"九龍"},{"en":"Yee On Court","zh":"---- 怡安閣","region":"九龍"},{"en":"Peninsula East","zh":"---- 星輝豪庭","region":"九龍"},{"en":"Peninsula Heights","zh":"---- 星輝豪庭","region":"九龍"},{"en":"The Bloomsville","zh":"---- 陶源","region":"九龍"},{"en":"Eight College","zh":"","region":"九龍"},{"en":"Grand Austin","zh":"","region":"九龍"},{"en":"The Austin","zh":"","region":"九龍"},{"en":"King's Park Hill","zh":"京士柏山","region":"九龍"},{"en":"Shining Heights","zh":"亮賢居","region":"九龍"},{"en":"The Crescent","zh":"仁禮花園","region":"九龍"},{"en":"Mandarin Garden","zh":"仁華園","region":"九龍"},{"en":"No.1 Ho Man Tin Hill","zh":"何文田山 1 號","region":"九龍"},{"en":"Ho Man Tin Hill Road, Grand Court","zh":"何文田山道加林閣","region":"九龍"},{"en":"Wai Yick Building","zh":"偉益大廈","region":"九龍"},{"en":"Sky Tower","zh":"傲雲峰","region":"九龍"},{"en":"Kiu Wang Mansion","zh":"僑宏大廈","region":"九龍"},{"en":"Hampton Place","zh":"凱帆軒","region":"九龍"},{"en":"The Arch","zh":"凱旋門","region":"九龍"},{"en":"Kadoorie Hill","zh":"加多利山","region":"九龍"},{"en":"Royal Peninsula","zh":"半島豪庭","region":"九龍"},{"en":"Village Gardens","zh":"又一村花園","region":"九龍"},{"en":"The Zumurud","zh":"君柏","region":"九龍"},{"en":"Harbour Green","zh":"君滙港","region":"九龍"},{"en":"Parc Palais","zh":"君頤峰","region":"九龍"},{"en":"Carmen's Garden","zh":"嘉文花園","region":"九龍"},{"en":"Rockford Mansion and Clifford Mansion","zh":"嘉栢園及嘉翠園","region":"九龍"},{"en":"Lorna Villa","zh":"嘉福苑","region":"九龍"},{"en":"The Montebello","zh":"嘉豪軒","region":"九龍"},{"en":"Bright Court (Prince Edward Road West)","zh":"嘉輝大廈 (太子道西)","region":"九龍"},{"en":"Greenfield Terrace","zh":"嘉輝臺","region":"九龍"},{"en":"Ultima","zh":"天鑄","region":"九龍"},{"en":"The Pacifica","zh":"宇晴軒","region":"九龍"},{"en":"Onward Court","zh":"安華閣","region":"九龍"},{"en":"Grandco Mansion","zh":"寶堡大廈","region":"九龍"},{"en":"Meridian Hill","zh":"尚御","region":"九龍"},{"en":"Aria","zh":"峻弦","region":"九龍"},{"en":"Perth Apartments","zh":"巴富洋樓","region":"九龍"},{"en":"Regent On The Hill","zh":"帝峯豪苑","region":"九龍"},{"en":"The Hermitage","zh":"帝峯．皇殿","region":"九龍"},{"en":"King's Park Villa","zh":"帝庭園","region":"九龍"},{"en":"Majestic Park","zh":"帝庭豪園","region":"九龍"},{"en":"Everwell Garden","zh":"常康園","region":"九龍"},{"en":"Lucky Court","zh":"幸運閣","region":"九龍"},{"en":"Fortune House","zh":"廣福苑","region":"九龍"},{"en":"Lime Stardom","zh":"形品星寓","region":"九龍"},{"en":"The Coronation","zh":"御金．國峯","region":"九龍"},{"en":"Dragon View (Chung Hau Street)","zh":"御龍居 (忠孝街)","region":"九龍"},{"en":"Tak Wai Mansion (Phase 2)","zh":"德威大廈第二期","region":"九龍"},{"en":"Yee Yuen","zh":"怡苑","region":"九龍"},{"en":"Harrison Court (Phase 3 - 6)","zh":"恒信園 (第 3 - 6 期)","region":"九龍"},{"en":"Park View Court","zh":"恒柏園","region":"九龍"},{"en":"Westland Heights","zh":"慧園","region":"九龍"},{"en":"Forfar","zh":"懿薈","region":"九龍"},{"en":"Sorrento","zh":"擎天半島","region":"九龍"},{"en":"Mantin Court","zh":"文田閣","region":"九龍"},{"en":"Mountain Court","zh":"文豪閣","region":"九龍"},{"en":"Chatham Gate","zh":"昇御門","region":"九龍"},{"en":"Scenic View","zh":"曉暉花園","region":"九龍"},{"en":"Manhattan Hill","zh":"曼克頓山","region":"九龍"},{"en":"Lockoo Gardens","zh":"樂古花園","region":"九龍"},{"en":"Banyan Garden","zh":"泓景臺","region":"九龍"},{"en":"The Long Beach","zh":"浪澄灣","region":"九龍"},{"en":"Helena Garden","zh":"海倫苑","region":"九龍"},{"en":"Florient Rise","zh":"海桃灣","region":"九龍"},{"en":"Harbour Place","zh":"海濱南岸","region":"九龍"},{"en":"The Victoria Towers","zh":"港景峯","region":"九龍"},{"en":"Sceneway Garden","zh":"滙景花園","region":"九龍"},{"en":"The Waterfront","zh":"漾日居","region":"九龍"},{"en":"15 Ho Man Tin Hill","zh":"灝畋峰","region":"九龍"},{"en":"The Regalia","zh":"爵士花園","region":"九龍"},{"en":"Villa Carlton","zh":"爾登華庭","region":"九龍"},{"en":"Lions Rise","zh":"現崇山","region":"九龍"},{"en":"Grandeur Villa","zh":"瑰麗新村","region":"九龍"},{"en":"Kingsland Villa","zh":"瓊林別墅","region":"九龍"},{"en":"One Beacon Hill","zh":"畢架山一號","region":"九龍"},{"en":"Broadway Towers","zh":"百樂園","region":"九龍"},{"en":"Prince Apartments Stage III","zh":"皇子大廈第三期","region":"九龍"},{"en":"Noble Hill","zh":"皇府山","region":"九龍"},{"en":"Nob Hill","zh":"盈暉臺","region":"九龍"},{"en":"Palace Garden","zh":"碧麗園","region":"九龍"},{"en":"Bailey Garden","zh":"碧麗花園","region":"九龍"},{"en":"Silver Garden","zh":"秀芳花園","region":"九龍"},{"en":"8 Waterloo Road","zh":"窩打老道 8 號","region":"九龍"},{"en":"Flora Villa","zh":"紫翠園","region":"九龍"},{"en":"Island Harbourview","zh":"維港灣","region":"九龍"},{"en":"Stars By The Harbour","zh":"維港．星岸","region":"九龍"},{"en":"Miami Mansion","zh":"美佳大廈","region":"九龍"},{"en":"Merlin Court","zh":"美輪閣","region":"九龍"},{"en":"Fairyland Garden","zh":"翠華園","region":"九龍"},{"en":"The Lamma Palace","zh":"藍馬豪庭","region":"九龍"},{"en":"Hoover Court","zh":"豪華閣","region":"九龍"},{"en":"Parc Regal","zh":"賀龍居","region":"九龍"},{"en":"One Mayfair","zh":"逸瓏","region":"九龍"},{"en":"Caldecott Hill","zh":"郝德傑山","region":"九龍"},{"en":"Golden Villa","zh":"金麗苑","region":"九龍"},{"en":"Cambria Court","zh":"金麗閣","region":"九龍"},{"en":"Ellery Terrace","zh":"雅利德樺臺","region":"九龍"},{"en":"The Astoria","zh":"雅士花園","region":"九龍"},{"en":"The Astrid","zh":"雅麗居","region":"九龍"},{"en":"Highview","zh":"高瞻台","region":"九龍"},{"en":"Cassia Court","zh":"高雅苑","region":"九龍"},{"en":"Super Tower","zh":"高雲閣","region":"九龍"},{"en":"Laguna City (Phase 3)","zh":"麗港城 (第三期)","region":"九龍"},{"en":"Laguna City (Phase 2)","zh":"麗港城 (第二期)","region":"九龍"},{"en":"Regal Court","zh":"麗豪閣","region":"九龍"},{"en":"Beacon Hill Court (Beacon Hill Road)","zh":"龍景樓 (筆架山道)","region":"九龍"},{"en":"Cypress Garden","zh":"龍柏花園","region":"九龍"},{"en":"Villa Premiere","zh":"---- 朗怡居","region":"新界"},{"en":"Aqua Blue","zh":"---- 浪濤灣","region":"新界"},{"en":"Yuccie Square","zh":"世宙","region":"新界"},{"en":"World-Wide Gardens (Block 1 & 2)","zh":"世界花園 (第 1 & 2 座)","region":"新界"},{"en":"World-Wide Gardens (Block 3,3A,4,5,6)","zh":"世界花園 (第 3,3A,4,5,6 座)","region":"新界"},{"en":"Forest Hill (Tai Po)","zh":"倚龍山莊","region":"新界"},{"en":"Great Garden","zh":"偉景園","region":"新界"},{"en":"Alpine Garden","zh":"冠峰園","region":"新界"},{"en":"Nerine Cove","zh":"南浪海灣","region":"新界"},{"en":"Nan Fung Plaza","zh":"南豐廣場","region":"新界"},{"en":"La Grove","zh":"原築","region":"新界"},{"en":"Cypress Court","zh":"古柏園","region":"新界"},{"en":"Festival City","zh":"名城","region":"新界"},{"en":"The Grandiose","zh":"君傲灣","region":"新界"},{"en":"The Great Hill","zh":"嘉御山","region":"新界"},{"en":"Hiram's Villa","zh":"嘉林別墅","region":"新界"},{"en":"Kingswood Villas, Kenswood Court","zh":"嘉湖山莊景湖居","region":"新界"},{"en":"Kingswood Villas, Locwood Court","zh":"嘉湖山莊樂湖居","region":"新界"},{"en":"Kingswood Villas, Maywood Court","zh":"嘉湖山莊美湖居","region":"新界"},{"en":"Kingswood Villas, Chestwood Court","zh":"嘉湖山莊翠湖居","region":"新界"},{"en":"Kingswood Villas, Sherwood Court","zh":"嘉湖山莊賞湖居","region":"新界"},{"en":"Kingswood Villas, Lynwood Court","zh":"嘉湖山莊麗湖居","region":"新界"},{"en":"Claymore Garden","zh":"嘉美花園","region":"新界"},{"en":"Richwood Park","zh":"嘉豐花園","region":"新界"},{"en":"Peak One","zh":"壹號雲頂","region":"新界"},{"en":"Grand Palisades","zh":"大埔寶馬山","region":"新界"},{"en":"Tai Po Garden","zh":"大埔花園","region":"新界"},{"en":"Oceanarie","zh":"天宇海","region":"新界"},{"en":"The Wings","zh":"天晉","region":"新界"},{"en":"Serenity Park II","zh":"太湖花園第二期","region":"新界"},{"en":"Woodland Crest","zh":"奕翠園","region":"新界"},{"en":"Dragon Inn Court","zh":"容龍居","region":"新界"},{"en":"The Cliveden","zh":"寶雲匯","region":"新界"},{"en":"Uptown","zh":"尚城","region":"新界"},{"en":"Hong Tak Gardens (Tuen Mun)","zh":"屯門康德花園","region":"新界"},{"en":"Rosedale Gardens (Tuen Mun)","zh":"屯門玫瑰花園","region":"新界"},{"en":"Tuen Mun Court","zh":"屯門閣","region":"新界"},{"en":"Shan Kwong Tower Phase I","zh":"山光苑 第一期","region":"新界"},{"en":"Sausalito","zh":"嵐岸","region":"新界"},{"en":"Grand Pacific Views / Heights, Palatial Coast","zh":"帝濤灣浪琴軒/海琴軒","region":"新界"},{"en":"Symphony Bay (Villa Rhapsody)","zh":"帝琴灣 (凱琴居)","region":"新界"},{"en":"Royal Sea Crest","zh":"帝華軒","region":"新界"},{"en":"Park Royale","zh":"御豪山莊","region":"新界"},{"en":"The Palazzo","zh":"御龍山","region":"新界"},{"en":"Villa Tiara","zh":"怡峰園","region":"新界"},{"en":"Granville Garden","zh":"恒峰花園","region":"新界"},{"en":"Hanford Garden","zh":"恒福花園","region":"新界"},{"en":"Harvest Garden","zh":"恒豐園","region":"新界"},{"en":"Hanley Villa (Zone A Car Park)","zh":"恒麗園 (A 區停車場)","region":"新界"},{"en":"Hanley Villa (Zone B Car Park)","zh":"恒麗園 (B 區停車場)","region":"新界"},{"en":"Hanley Villa (Zone C Car Park)","zh":"恒麗園 (C 區停車場)","region":"新界"},{"en":"Hanley Villa (Zone E Car Park)","zh":"恒麗園 (E 區停車場)","region":"新界"},{"en":"Aegean Coast","zh":"愛琴海岸","region":"新界"},{"en":"The Aegean","zh":"愛琴灣","region":"新界"},{"en":"Parkview Court","zh":"慧景閣","region":"新界"},{"en":"Marina Garden","zh":"慧豐園","region":"新界"},{"en":"The Balmoral","zh":"承峰","region":"新界"},{"en":"Manlai Court","zh":"文禮閣","region":"新界"},{"en":"Sunny Villa","zh":"新麗苑","region":"新界"},{"en":"The Rise","zh":"昇柏山","region":"新界"},{"en":"Avignon","zh":"星堤","region":"新界"},{"en":"Caribbean Coast (Phase 1, 5 & 6)","zh":"映灣園 (第一、五及六期)","region":"新界"},{"en":"Greenwood Villas (Phase 1)","zh":"曉峰居 (第一期)","region":"新界"},{"en":"Hillview Court","zh":"曉嵐閣","region":"新界"},{"en":"Pristine Villa (Block 1 - 7)","zh":"曉翠山莊 (第 1-7 座)","region":"新界"},{"en":"Horizon Place","zh":"月海灣","region":"新界"},{"en":"Villa By The Park","zh":"朗庭園","region":"新界"},{"en":"Tung Chung Crescent","zh":"東堤灣畔","region":"新界"},{"en":"Park Avenue/Central Park","zh":"柏景灣/帝柏海灣","region":"新界"},{"en":"Juniper Villa","zh":"柏翠小築","region":"新界"},{"en":"Parkside Villa","zh":"柏麗豪園","region":"新界"},{"en":"Mayflower Mansion (Wang Fung Terrace)","zh":"梅苑 (宏豐臺)","region":"新界"},{"en":"Palm Beach","zh":"棕月灣","region":"新界"},{"en":"Richmond Court","zh":"樂恒花園","region":"新界"},{"en":"Prima Villa","zh":"欣廷軒","region":"新界"},{"en":"Cheerful Park","zh":"欣翠花園","region":"新界"},{"en":"Sha Tin Heights","zh":"沙田花園","region":"新界"},{"en":"Park Nara","zh":"泉薈","region":"新界"},{"en":"Ocean View","zh":"海典灣","region":"新界"},{"en":"Oceania Heights","zh":"海典軒","region":"新界"},{"en":"Seaview Crescent","zh":"海堤灣畔","region":"新界"},{"en":"Regency Park","zh":"海峰花園","region":"新界"},{"en":"Maritime Bay Car Park","zh":"海悅豪園地庫層停車場","region":"新界"},{"en":"Bayshore Towers","zh":"海栢花園","region":"新界"},{"en":"Long Beach Gardens","zh":"海濤花園","region":"新界"},{"en":"Riviera Gardens Car Park A","zh":"海濱花園 A 停車場","region":"新界"},{"en":"Riviera Gardens Car Park B","zh":"海濱花園 B 停車場","region":"新界"},{"en":"Riviera Gardens Car Park C","zh":"海濱花園 C 停車場","region":"新界"},{"en":"Riviera Gardens Car Park D","zh":"海濱花園 D 停車場","region":"新界"},{"en":"Riviera Gardens Car Park E","zh":"海濱花園 E 停車場","region":"新界"},{"en":"Royal Jubilee","zh":"海禧華庭","region":"新界"},{"en":"Crown By The Sea","zh":"海譽","region":"新界"},{"en":"Anglers' Bay","zh":"海雲軒","region":"新界"},{"en":"Rhine Terrace","zh":"海韻臺","region":"新界"},{"en":"Rhine Garden","zh":"海韻花園","region":"新界"},{"en":"The Riverpark","zh":"溱岸 8 號","region":"新界"},{"en":"The Woodsville","zh":"溱林","region":"新界"},{"en":"Park Signature (Tower 1 - 3)","zh":"溱柏 (第 1 至 3 座)","region":"新界"},{"en":"Park Signature (Tower 5 - 10)","zh":"溱柏 (第 5 至 10 座)","region":"新界"},{"en":"Constellation Cove","zh":"滌濤山","region":"新界"},{"en":"Villa Esplanada","zh":"灝景灣","region":"新界"},{"en":"Peridot Court","zh":"瑜翠園","region":"新界"},{"en":"Julimount Garden (Block 1 - 3)","zh":"瑞峰花園 (第 1 - 3 座)","region":"新界"},{"en":"Julimount Garden (Block 4 - 6)","zh":"瑞峰花園 (第 4 - 6 座)","region":"新界"},{"en":"City Point","zh":"環宇海灣","region":"新界"},{"en":"Mount One","zh":"瓏山一號","region":"新界"},{"en":"Century Gateway","zh":"瓏門","region":"新界"},{"en":"Greenfield Court","zh":"田園閣","region":"新界"},{"en":"Emerald Palace","zh":"疊翠豪庭","region":"新界"},{"en":"Parkland Villas","zh":"疊茵庭","region":"新界"},{"en":"The Paramount","zh":"盈峰翠邸","region":"新界"},{"en":"Pik Sha Garden","zh":"碧沙花園","region":"新界"},{"en":"Pictorial Garden (Phase 3)","zh":"碧濤花園三期","region":"新界"},{"en":"Bayview Terrace","zh":"碧翠花園","region":"新界"},{"en":"Shatin 33","zh":"碧霞花園","region":"新界"},{"en":"Magdalene Garden","zh":"禎祥園","region":"新界"},{"en":"Botania Villa","zh":"綠怡居","region":"新界"},{"en":"Fiori","zh":"綠悅","region":"新界"},{"en":"Belair Monte","zh":"綠悠軒","region":"新界"},{"en":"Ocean Shores (Phase 1 - 3)","zh":"維景灣畔 (第 1 - 3 期)","region":"新界"},{"en":"Hemera","zh":"緻藍天","region":"新界"},{"en":"Primrose Hill","zh":"縉庭山","region":"新界"},{"en":"Ocean Pointe","zh":"縉皇居","region":"新界"},{"en":"Evergreen Place","zh":"翠叠軒","region":"新界"},{"en":"Green Lodge","zh":"翠峰","region":"新界"},{"en":"Verdant Villa","zh":"翠峰小築","region":"新界"},{"en":"Camellia Court","zh":"翠彤苑","region":"新界"},{"en":"Greenview Terrace","zh":"翠景臺","region":"新界"},{"en":"Summit Terrace","zh":"翠豐臺","region":"新界"},{"en":"Greenery Place","zh":"翠韻華庭","region":"新界"},{"en":"Savanna Garden (Block 41 - 43)","zh":"翡翠花園（第 41- 43 座）","region":"新界"},{"en":"Beneville","zh":"聚康山莊","region":"新界"},{"en":"Tsuen King Garden (Phase 2)","zh":"荃景花園 (第二期)","region":"新界"},{"en":"Covent Garden","zh":"華翠豪園","region":"新界"},{"en":"Kwai Chung Plaza","zh":"葵涌廣場","region":"新界"},{"en":"The Panorama","zh":"蔚景花園","region":"新界"},{"en":"Forest Hill (Sha Tin)","zh":"蔚林居","region":"新界"},{"en":"Greenpark Villa","zh":"蔚翠花園","region":"新界"},{"en":"Residence Oasis","zh":"蔚藍灣畔","region":"新界"},{"en":"Coastal Skyline (Phase 1 & 3)","zh":"藍天海岸 (第一及三期)","region":"新界"},{"en":"Coastal Skyline (Phase 4)","zh":"藍天海岸 (第四期)","region":"新界"},{"en":"Villa Art Deco","zh":"藝典居","region":"新界"},{"en":"Sereno Verde","zh":"蝶翠峰","region":"新界"},{"en":"Costa Bello","zh":"西貢濤苑","region":"新界"},{"en":"Baycrest","zh":"觀瀾雅軒","region":"新界"},{"en":"Residence 88","zh":"譽 88","region":"新界"},{"en":"Scenery Garden","zh":"豐景花園","region":"新界"},{"en":"Double Cove (Phase 1)","zh":"迎海 (第 1 期)","region":"新界"},{"en":"Double Cove (Phase 4)","zh":"迎海 (第 4 期)","region":"新界"},{"en":"Double Cove (Phase 5)","zh":"迎海 (第 5 期)","region":"新界"},{"en":"Marbella","zh":"迎濤灣","region":"新界"},{"en":"Metro Town","zh":"都會駅","region":"新界"},{"en":"Recours La Serre","zh":"采茵軒","region":"新界"},{"en":"The Parcville","zh":"采葉庭","region":"新界"},{"en":"Windsor Villa","zh":"金莎花園","region":"新界"},{"en":"Lake Silver","zh":"銀湖．天峰","region":"新界"},{"en":"Jubilee Garden (Shatin)","zh":"銀禧花園 (沙田)","region":"新界"},{"en":"Jubilee Garden (Hung Shui Kiu)","zh":"銀禧花園 (洪水橋)","region":"新界"},{"en":"Ascot Heights","zh":"雅仕閣","region":"新界"},{"en":"Faraday House","zh":"雅德苑","region":"新界"},{"en":"The Apex","zh":"雍雅軒","region":"新界"},{"en":"Sky One","zh":"雲頂峰","region":"新界"},{"en":"Castle Peak Villas","zh":"青山別墅","region":"新界"},{"en":"Tsing Yung Terrace","zh":"青榕臺","region":"新界"},{"en":"Greenfield Garden (Tsing Yi )","zh":"青衣翠怡花園","region":"新界"},{"en":"The Capitol","zh":"首都","region":"新界"},{"en":"Marbella Gardens","zh":"馬寶花園","region":"新界"},{"en":"Golf Parkview","zh":"高爾夫景園","region":"新界"},{"en":"Deerhill Bay (Deerhill Tower)","zh":"鹿茵山莊 (鹿怡居)","region":"新界"},{"en":"Deerhill Bay (Deerhill Villas)","zh":"鹿茵山莊 (鹿茵軒)","region":"新界"},{"en":"Ville De Cascade","zh":"麗峰花園","region":"新界"},{"en":"Beauty Court (Man Fuk Road)","zh":"麗苑 (文福道)","region":"新界"},{"en":"Lung Tang Court (Tsing Lung Tau)","zh":"龍騰閣 (青龍頭)","region":"新界"}];
+var state = { region: "全部", estate: null, custom: "", charger: "" };
+var lang = "zh";
+
+var REG = {
+  zh: { "全部": "全部", "港島": "港島", "九龍": "九龍", "新界": "新界" },
+  en: { "全部": "All", "港島": "Hong Kong Island", "九龍": "Kowloon", "新界": "New Territories" }
+};
+var CHG = {
+  zh: { "7kw": "7kW 單相充電樁", "11kw": "11kW 三相充電樁", "22kw": "22kW 三相充電樁" },
+  en: { "7kw": "7kW single-phase charger", "11kw": "11kW three-phase charger", "22kw": "22kW three-phase charger" }
+};
+
+var T = {
+zh: {
+  docTitle: "EV充電樁安裝 — 已完成基建屋苑車位業主專頁",
+  badge: "只限已完成基建屋苑 · EHSS 名單",
+  h1: "屋苑基建已完成，<br>車位業主可以<span class=\"hl\">裝充電樁</span>喇",
+  lead: "呢頁係俾已完成充電基建屋苑嘅車位業主：公共基建已經做好，只差你自己車位嗰一段。查到你屋苑喺名單入面、揀好充電樁，一撳就可以預約報價，之後就可以喺自己車位充電。",
+  heroCta: "即刻查你屋苑裝唔裝得 ↓",
+  stat1: "已完成屋苑", stat2: "款充電樁選擇", stat3: "步完成預約",
+  pill1: "揀屋苑", pill2: "揀充電樁", pill3: "預約報價", stepsAria: "步驟",
+  whyH: "公共基建已做好，只差最後一哩",
+  whySub: "唔少車主以為要等屋苑搞掂晒先裝得——其實你屋苑嗰份已經完成，剩低嗰段係屬於你自己車位嘅，唔會有人代你做。",
+  w1b: "公共基建已到位", w1p: "停車場嘅配電設備、接線箱同線槽等公共部分，已由屋苑透過「EV屋苑充電易資助計劃」（EHSS）完成，唔使再等屋苑開工或者開會通過。",
+  w2b: "最後一哩，裝喺你自己車位", w2p: "公共部分以外，每個車位仲要裝返屬於自己嘅充電樁同獨立電錶，先可以喺自己車位充電——呢頁就係幫你開始呢一步。",
+  w3b: "而家就可以開始", w3p: "只要你屋苑喺已完成名單入面，就可以預約報價，唔使等下一輪屋苑工程。",
+  s1h: "你屋苑裝唔裝得，一查就知",
+  s1sub: "全港 517 間屋苑已經完成充電基建，你嗰間好可能就喺入面。打低屋苑名（中文、英文都得），即刻知你車位而家裝唔裝得。",
+  chipAll: "全部", chipHK: "港島", chipKLN: "九龍", chipNT: "新界", regionAria: "地區",
+  searchPh: "例如：海怡半島、海怡、South Horizons…", searchAria: "搜尋屋苑", resultsAria: "屋苑結果",
+  selLabel: "✅ 已揀選", change: "更改",
+  nfB: "搵唔到你屋苑？", nfP: "如果你屋苑唔喺已完成名單，可能基建仍在施工或未獲批——唔好當裝得。你仍然可以喺下面留低屋苑名預約報價，我哋會幫你核對最新狀態。",
+  nfBtn: "→ 用自填屋苑名繼續預約報價",
+  s2h: "揀充電樁",
+  s2sub: "唔肯定揀邊款？大部份私家車主揀 7kW 過夜慢充已經夠用；最終規格會喺現場評估時按你車位供電再確認。",
+  cvB: "裝喺你車位牆身，一插即充", cvP: "充電樁就係一部掛牆嘅充電盒，駁住你車位嘅供電。返到屋企插上充電槍，瞓醒就充滿，唔使再去公用充電站排隊等位。",
+  rec: "最常用",
+  c7phase: "單相 · 家用慢充", c7a: "約 1 小時充 30–40 公里續航", c7b: "過夜 8 小時，足夠日常通勤", c7c: "適合大部份屋苑車位供電",
+  c11phase: "三相 · 中速", c11a: "約 1 小時充 50–60 公里續航", c11b: "適合每日行駛里數較高嘅車主", c11c: "車位需有三相供電，先評估確認",
+  c22phase: "三相 · 最快家用", c22a: "約 1 小時充 100 公里以上續航", c22b: "適合支援 22kW 交流充電嘅車款", c22c: "供電要求最高，必須先做評估",
+  priceNote: "💰 <b>價錢點計？</b> 每個車位嘅走線距離同供電情況都唔同，所以唔會喺度寫死一個價——<b>現場評估後報價</b>，報價確認先施工，唔會中途加價呃你。",
+  s3h: "一撳 WhatsApp 預約報價",
+  s3sub: "填埋車位編號（可選），下面會即時砌好預約報價訊息，一撳即開 WhatsApp 傳送，唔使自己打字。",
+  parkingLabel: "車位編號（可選）", parkingPh: "例如：B2 層 128 號車位", previewLabel: "預約報價訊息預覽",
+  waBtn: "用 WhatsApp 預約報價", copyBtn: "複製訊息",
+  hint: "按下 WhatsApp 按鈕會開分享版面俾你揀聯絡人傳送；唔用 WhatsApp 都得，可以先複製訊息，再貼去你慣用嘅平台傳送。",
+  trustH: "註冊電工施工，完工有證明",
+  trustP: "安裝唔係求其駁線：由註冊電業承辦商嘅註冊電工負責施工，完工後你會收到 WR1 完工證明留底，證明成套電力裝置合規完成——日後管理處或者保險問起，都有文件喺手，唔使口同鼻拗。",
+  faqH: "常見問題",
+  q1: "我屋苑唔喺名單，係唔係裝唔到？", a1: "唔一定。呢頁只列 EHSS 已完成基建嘅屋苑，係最快可以落單嘅一批。唔喺名單可能係施工中或者已獲批未開工。不過非 EHSS 屋苑可能需要更長時間評估，甚至要等屋苑整體方案先裝到，唔可以即刻當裝得；你可以照樣預約報價，我哋會先幫你核對狀態再答你。",
+  q2: "點解冇標價？幾時先知要幾錢？", a2: "因為每個車位走線距離、供電容量都唔同，寫死一個價只會誤導。流程係先做現場評估，再出正式報價，你確認先施工。",
+  q3: "7kW 同 22kW 點揀？", a3: "夜晚泊車充電為主、每日行幾十公里，7kW 已經夠。架車支援三相快充、每日里數高，先考慮 11kW 或 22kW——但要先確認車位有冇三相供電，評估時會一併覆核。",
+  q4: "WR1 係咩？點解重要？", a4: "WR1 係完工證明，證明電力裝置已合規完成。冇 WR1 嘅安裝唔合規，管理處同保險都可能唔認；完成安裝後你會收到呢份證明作記錄。",
+  q5: "管理處批唔批，點查？", a5: "先向管理處問清楚：你屋苑有冇既定嘅申請程序同指定要求，按程序交文件先唔會行冤枉路。交咗文件之後，要分開兩段時間睇——屋苑自己嘅審批係一段，電力公司嘅批核係另一段，唔好混為一談；電力公司嘅書面回覆一般約需 4 至 6 星期。",
+  q6: "價錢點解差咁遠？", a6: "因為每個報價其實係幾項加埋：充電樁機價、基本安裝、拉線、電力升級（如需要）同代辦，逐項唔同，總數自然差得遠。EHSS 已完成基建嘅屋苑，一般屬於短接駁一類，工程相對簡單；但每個車位嘅走線同供電始終唔同，最終仍以現場評估後報價為準。",
+  q7: "租車位裝唔裝得？", a7: "可以考慮，但要先取得車位業主同意先可以裝，唔好自己話事。另外，退租或者業主日後賣車位嗰陣，充電設備點安排，要喺評估時一併問清、講明，免得之後拗數。",
+  q8: "點解要獨立電錶？", a8: "獨立電錶將 EV 充電用電同屋企用電分開計，充電嗰部分唔會推高屋企電費嘅累進收費級別。而且裝咗獨立電錶之後，先有資格申請分時段電價；申請要預早提出，一般要提前約一個月。",
+  q9: "我架車用唔用得盡 11kW／22kW？", a9: "未必用得盡——好多車只支援單相充電，就算裝咗三相充電樁都用唔盡佢嘅功率。如果主要係夜晚過夜充，7kW 多數已經夠用。真係想揀三相，要先確認你車位有冇三相供電，評估時會一併覆核。",
+  finalH: "你屋苑已經準備好，差你嗰一步",
+  finalSub: "查到你屋苑喺名單入面，就可以即刻開始：揀好充電樁，一撳預約報價，之後安安樂樂喺自己車位過夜充電，唔使再同人爭公用充電位。",
+  finalCta: "即刻查屋苑，預約報價 ↓",
+  footer: "屋苑名單來源：EV屋苑充電易資助計劃（EHSS）2026 年 8 月版已完成名單 · 共 517 間 · 2026-10-30 核對<br>充電速度為約數，實際規格以現場評估為準；價錢一律現場評估後報價。",
+  heroArtAlt: "插圖：電動車泊喺屋苑停車場自己車位，插住牆身充電樁充電",
+  chargerArtAlt: "插圖：掛牆充電樁特寫，充電槍連住充電線",
+  elecArtAlt: "插圖：戴安全帽、著反光背心嘅註冊電工，拎住寫有 WR1 嘅完工證明文件"
+},
+en: {
+  docTitle: "EV Charger Installation — For parking space owners in estates with completed charging infrastructure",
+  badge: "Estates with completed infrastructure only · EHSS list",
+  h1: "Your estate’s infrastructure is ready —<br>parking space owners can <span class=\"hl\">install a charger</span> now",
+  lead: "This page is for parking space owners in estates where the EV charging infrastructure is already complete: the shared infrastructure is done — only the last stretch to your own space remains. Find your estate on the list, pick a charger, and book a quotation in one tap, then charge at your own space.",
+  heroCta: "Check if your estate qualifies ↓",
+  stat1: "estates completed", stat2: "charger options", stat3: "steps to book",
+  pill1: "Pick your estate", pill2: "Pick a charger", pill3: "Book a quotation", stepsAria: "Steps",
+  whyH: "Shared infrastructure is done — only the last mile is yours",
+  whySub: "Many owners think they have to wait until the estate finishes everything — but your estate’s part is already complete. What remains belongs to your own parking space, and no one will do it for you.",
+  w1b: "Shared infrastructure in place", w1p: "The shared parts of the car park — distribution equipment, junction boxes and cable trunking — have been completed by your estate under the EV-charging at Home Subsidy Scheme (EHSS). No need to wait for the estate to start works or pass a resolution.",
+  w2b: "The last mile, at your own space", w2p: "Beyond the shared parts, each space still needs its own charger and separate electricity meter before you can charge there — this page helps you start that step.",
+  w3b: "You can start now", w3p: "As long as your estate is on the completed list, you can book a quotation — no need to wait for the next round of estate works.",
+  s1h: "Can your estate get one? Find out in one check",
+  s1sub: "517 estates across Hong Kong have completed their charging infrastructure — yours is very likely one of them. Type your estate’s name (Chinese or English) to see right away whether your space can get a charger now.",
+  chipAll: "All", chipHK: "Hong Kong Island", chipKLN: "Kowloon", chipNT: "New Territories", regionAria: "Region",
+  searchPh: "e.g. South Horizons, 海怡半島…", searchAria: "Search estates", resultsAria: "Estate results",
+  selLabel: "✅ Selected", change: "Change",
+  nfB: "Can’t find your estate?", nfP: "If your estate isn’t on the completed list, its infrastructure may still be under construction or not yet approved — don’t assume it can be installed. You can still leave your estate name below to book a quotation, and we’ll check the latest status for you.",
+  nfBtn: "→ Continue booking with a manually entered estate name",
+  s2h: "Pick a charger",
+  s2sub: "Not sure which one? For most private car owners, a 7kW overnight charger is enough; the final spec will be confirmed during the on-site assessment based on your space’s power supply.",
+  cvB: "Mounted on your space’s wall — plug in and charge", cvP: "A charger is a wall-mounted charging box connected to your space’s power supply. Come home, plug in the charging cable, and wake up to a full charge — no more queueing at public charging stations.",
+  rec: "Most popular",
+  c7phase: "Single-phase · home slow charging", c7a: "About 30–40 km of range per hour of charging", c7b: "8 hours overnight — plenty for daily commuting", c7c: "Suits the power supply of most estate parking spaces",
+  c11phase: "Three-phase · medium speed", c11a: "About 50–60 km of range per hour of charging", c11b: "Suits owners with higher daily mileage", c11c: "Space needs three-phase supply — confirmed by assessment first",
+  c22phase: "Three-phase · fastest home charging", c22a: "Over 100 km of range per hour of charging", c22b: "Suits cars that support 22kW AC charging", c22c: "Highest supply requirement — an assessment is essential",
+  priceNote: "💰 <b>How is the price worked out?</b> Cable-run distance and supply conditions differ for every space, so no fixed price is quoted here — <b>quotation after on-site assessment</b>. Work starts only after you confirm the quotation, with no surprise mid-job price hikes.",
+  s3h: "Book a quotation on WhatsApp in one tap",
+  s3sub: "Add your parking space number (optional) and your booking message is put together below instantly — one tap opens WhatsApp and sends it, no typing needed.",
+  parkingLabel: "Parking space number (optional)", parkingPh: "e.g. B2, space 128", previewLabel: "Your booking message preview",
+  waBtn: "Book a quotation on WhatsApp", copyBtn: "Copy message",
+  hint: "Tapping the WhatsApp button opens a share sheet so you can pick a contact to send to. Not on WhatsApp? Copy the message first and paste it into whichever platform you use.",
+  trustH: "Installed by a registered electrician, with a completion certificate",
+  trustP: "Installation isn’t just wiring things up: the work is carried out by a registered electrician of a registered electrical contractor, and when it’s done you’ll receive the WR1 completion certificate for your records, certifying that the whole electrical installation was completed to standard — so if the management office or your insurer ever asks, you have the document in hand.",
+  faqH: "Frequently asked questions",
+  q1: "My estate isn’t on the list — does that mean I can’t get one?", a1: "Not necessarily. This page lists only estates whose EHSS infrastructure is complete — the batch that can be ordered fastest. If yours isn’t listed, it may be under construction, or approved but not yet started. However, a non-EHSS estate may need a longer assessment, or even have to wait for an estate-wide scheme, so it can’t be treated as installable straight away; you can still book a quotation and we’ll check the status first before getting back to you.",
+  q2: "Why is there no price? When will I know how much it costs?", a2: "Because cable-run distance and supply capacity differ for every space, a fixed price would only mislead. The process is: on-site assessment first, then a formal quotation, and work starts only after you confirm it.",
+  q3: "How do I choose between 7kW and 22kW?", a3: "If you mainly charge overnight and drive a few dozen kilometres a day, 7kW is enough. Consider 11kW or 22kW only if your car supports three-phase fast charging and your daily mileage is high — but first your space must have three-phase supply, which will be verified during the assessment.",
+  q4: "What is WR1? Why does it matter?", a4: "WR1 is the completion certificate proving the electrical installation was completed to standard. An installation without WR1 is non-compliant, and the management office or insurer may not recognise it; after installation you’ll receive this certificate for your records.",
+  q5: "How do I find out whether the management office will approve?", a5: "First ask the management office: does your estate have an established application procedure and specified requirements? Follow that procedure when you submit documents so nothing is wasted. After submission, treat the timing as two separate stages — the estate’s own approval is one stage, and the power company’s approval is another; don’t mix them up. The power company’s written reply generally takes about 4 to 6 weeks.",
+  q6: "Why do prices vary so much?", a6: "Because every quotation is several items added together: the charger unit itself, basic installation, cable running, a power upgrade (if needed) and handling/administration — each item differs, so totals naturally vary a lot. Estates with completed EHSS infrastructure are generally the short-connection type, so the works are relatively simple; but cable runs and supply still differ for every space, so the final price is always the quotation after on-site assessment.",
+  q7: "Can I install one if I rent my parking space?", a7: "It can be considered, but you must get the parking space owner’s consent first — don’t decide on your own. Also, what happens to the charging equipment when the tenancy ends, or if the owner later sells the space, should be asked and agreed during the assessment, so there’s no dispute afterwards.",
+  q8: "Why do I need a separate electricity meter?", a8: "A separate meter bills your EV charging separately from your household electricity, so charging won’t push your home bill into a higher progressive tariff tier. And only with a separate meter are you eligible to apply for a time-of-use tariff; apply early — generally about a month in advance.",
+  q9: "Can my car actually use the full 11kW / 22kW?", a9: "Not necessarily — many cars only support single-phase charging, so even with a three-phase charger they can’t use its full power. If you mainly charge overnight, 7kW is usually enough. If you do want three-phase, first confirm your parking space has a three-phase supply; this will be verified during the assessment.",
+  finalH: "Your estate is ready — the next step is yours",
+  finalSub: "If your estate is on the list, you can start right away: pick a charger, book a quotation in one tap, and then charge overnight at your own space in peace — no more fighting over shared public chargers.",
+  finalCta: "Check your estate and book a quotation ↓",
+  footer: "Estate list source: the completed list of the EV-charging at Home Subsidy Scheme (EHSS), August 2026 edition · 517 estates · verified 30 Oct 2026<br>Charging speeds are approximate; final specs are subject to the on-site assessment. All prices are quoted after on-site assessment.",
+  heroArtAlt: "Illustration: an EV parked at its own space in an estate car park, plugged into a wall-mounted charger",
+  chargerArtAlt: "Illustration: close-up of a wall-mounted charger with its charging cable",
+  elecArtAlt: "Illustration: a registered electrician in a hard hat and reflective vest, holding a WR1 completion certificate"
+}};
+
+var STR = {
+zh: {
+  empty: "呢個搜尋暫時搵唔到已完成基建嘅屋苑——試下打屋苑名嘅另一種寫法，或者用下面嘅自填方式，我哋幫你核對。",
+  selMeta: function(r){ return "地區：" + REG.zh[r] + " · 狀態：EHSS 基建已完成"; },
+  customSuffix: "（自填，未在已完成名單）",
+  customMeta: "預約報價時請對方核對基建狀態",
+  msgHead: "你好，我想預約 EV 充電樁安裝報價：",
+  msgEstate: "屋苑：", msgCharger: "想裝：", msgParking: "車位：",
+  msgTail: "請幫我安排現場評估同報價，唔該。",
+  customNote: "（自填，未在已完成名單，請幫我核對）",
+  missEstate: "揀屋苑", missCharger: "揀充電樁",
+  idle: function(m){ return "揀好" + m.join("同") + "之後，你嘅預約報價訊息就會喺呢度準備好，一撳即送。"; },
+  toastCopied: "訊息已複製，可以貼去任何平台",
+  toastFail: "複製失敗，請長按預覽訊息手動複製"
+},
+en: {
+  empty: "No estate with completed infrastructure matches this search — try another spelling of the estate name, or use the manual entry below and we’ll check for you.",
+  selMeta: function(r){ return "Region: " + REG.en[r] + " · Status: EHSS infrastructure completed"; },
+  customSuffix: " (entered manually — not on the completed list)",
+  customMeta: "Please ask us to verify the infrastructure status when you book",
+  msgHead: "Hello, I’d like to book a quotation for EV charger installation:",
+  msgEstate: "Estate: ", msgCharger: "Charger: ", msgParking: "Parking space: ",
+  msgTail: "Please arrange an on-site assessment and quotation for me. Thank you.",
+  customNote: " (entered manually — not on the completed list, please verify)",
+  missEstate: "your estate", missCharger: "your charger",
+  idle: function(m){ return "Once you’ve picked " + m.join(" and ") + ", your booking message will be ready here — send it in one tap."; },
+  toastCopied: "Message copied — paste it into any platform",
+  toastFail: "Copy failed — please long-press the preview to copy manually"
+}};
+
+var qEl = document.getElementById('q');
+var resultsEl = document.getElementById('results');
+var notFoundEl = document.getElementById('notFound');
+var selectedBox = document.getElementById('selectedBox');
+var parkingEl = document.getElementById('parking');
+
+function cleanZh(z){ return (z||"").replace(/^-+\s*/,"").trim(); }
+function hasZh(e){ return !!cleanZh(e.zh); }
+function displayName(e){ if(lang === "en") return e.en; var z = cleanZh(e.zh); return z ? z : e.en; }
+function subName(e){ if(lang === "en") return hasZh(e) ? cleanZh(e.zh) : ""; return hasZh(e) ? e.en : ""; }
+function fullName(e){
+  var z = cleanZh(e.zh);
+  if(!z) return e.en;
+  return lang === "en" ? e.en + " (" + z + ")" : z + "（" + e.en + "）";
+}
+
+function filtered(){
+  var q = qEl.value.trim().toLowerCase();
+  return ESTATES.filter(function(e){
+    if(state.region !== "全部" && e.region !== state.region) return false;
+    if(!q) return true;
+    return e.en.toLowerCase().indexOf(q) > -1 || cleanZh(e.zh).toLowerCase().indexOf(q) > -1;
+  });
+}
+
+function render(){
+  var list = filtered();
+  if(list.length === 0){
+    resultsEl.innerHTML = '<div class="empty">' + STR[lang].empty + '</div>';
+  } else {
+    resultsEl.innerHTML = list.map(function(e){
+      var sub = subName(e);
+      return '<button type="button" class="result-item" data-i="' + ESTATES.indexOf(e) + '" role="option">' +
+        '<span><span class="nm">' + escapeHtml(displayName(e)) + '</span>' + (sub ? '<br><span class="en">' + escapeHtml(sub) + '</span>' : '') + '</span>' +
+        '<span class="tag">' + escapeHtml(REG[lang][e.region]) + '</span></button>';
+    }).join('');
+  }
+  var q = qEl.value.trim();
+  notFoundEl.classList.toggle('show', q.length >= 2 && list.length === 0);
+  bindResults();
+}
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function bindResults(){
+  var items = resultsEl.querySelectorAll('.result-item');
+  for(var i=0;i<items.length;i++){
+    items[i].addEventListener('click', function(){
+      var e = ESTATES[parseInt(this.getAttribute('data-i'),10)];
+      selectEstate(e);
+    });
+  }
+}
+function paintSelected(){
+  if(state.estate){
+    document.getElementById('selectedName').textContent = fullName(state.estate);
+    document.getElementById('selectedMeta').textContent = STR[lang].selMeta(state.estate.region);
+  } else if(state.custom){
+    document.getElementById('selectedName').textContent = state.custom + STR[lang].customSuffix;
+    document.getElementById('selectedMeta').textContent = STR[lang].customMeta;
+  }
+}
+function selectEstate(e){
+  state.estate = e; state.custom = "";
+  paintSelected();
+  selectedBox.classList.add('show');
+  updateMsg();
+  document.getElementById('pill1').classList.add('done');
+  document.getElementById('pill2').classList.add('active');
+  document.getElementById('step2').scrollIntoView({behavior:'smooth', block:'start'});
+}
+document.getElementById('clearEstate').addEventListener('click', function(){
+  state.estate = null; state.custom = "";
+  selectedBox.classList.remove('show');
+  document.getElementById('pill1').classList.remove('done');
+  updateMsg(); qEl.focus();
+});
+document.getElementById('useCustom').addEventListener('click', function(){
+  var name = qEl.value.trim();
+  if(!name) return;
+  state.estate = null; state.custom = name;
+  paintSelected();
+  selectedBox.classList.add('show');
+  notFoundEl.classList.remove('show');
+  updateMsg();
+  document.getElementById('step2').scrollIntoView({behavior:'smooth', block:'start'});
+});
+
+var chips = document.querySelectorAll('.chip');
+for(var c=0;c<chips.length;c++){
+  chips[c].addEventListener('click', function(){
+    for(var j=0;j<chips.length;j++) chips[j].setAttribute('aria-pressed','false');
+    this.setAttribute('aria-pressed','true');
+    state.region = this.getAttribute('data-region');
+    render();
+  });
+}
+qEl.addEventListener('input', render);
+
+var chargerCards = document.querySelectorAll('.charger');
+for(var k=0;k<chargerCards.length;k++){
+  chargerCards[k].addEventListener('click', function(){
+    for(var j=0;j<chargerCards.length;j++) chargerCards[j].classList.remove('selected');
+    this.classList.add('selected');
+    this.querySelector('input').checked = true;
+    state.charger = this.getAttribute('data-id');
+    document.getElementById('pill2').classList.add('done');
+    document.getElementById('pill3').classList.add('active');
+    updateMsg();
+  });
+}
+parkingEl.addEventListener('input', updateMsg);
+
+function estateLabel(){
+  if(state.estate){
+    var e = state.estate, z = cleanZh(e.zh);
+    if(lang === "en") return z ? e.en + " (" + z + ", " + REG.en[e.region] + ")" : e.en + " (" + REG.en[e.region] + ")";
+    return z ? z + "（" + e.en + "，" + e.region + "）" : e.en + "（" + e.region + "）";
+  }
+  if(state.custom) return state.custom + STR[lang].customNote;
+  return "";
+}
+function buildMsg(){
+  var lines = [STR[lang].msgHead, STR[lang].msgEstate + estateLabel(), STR[lang].msgCharger + CHG[lang][state.charger]];
+  var p = parkingEl.value.trim();
+  if(p) lines.push(STR[lang].msgParking + p);
+  lines.push(STR[lang].msgTail);
+  return lines.join("\n");
+}
+function ready(){ return (state.estate || state.custom) && state.charger; }
+function updateMsg(){
+  var prev = document.getElementById('msgPreview');
+  var wa = document.getElementById('waBtn');
+  var cp = document.getElementById('copyBtn');
+  if(ready()){
+    prev.textContent = buildMsg();
+    wa.disabled = false; cp.disabled = false;
+  } else {
+    var missing = [];
+    if(!state.estate && !state.custom) missing.push(STR[lang].missEstate);
+    if(!state.charger) missing.push(STR[lang].missCharger);
+    prev.textContent = STR[lang].idle(missing);
+    wa.disabled = true; cp.disabled = true;
+  }
+}
+function toast(msg){
+  var t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2600);
+}
+document.getElementById('waBtn').addEventListener('click', function(){
+  if(!ready()) return;
+  var url = "https://api.whatsapp.com/send?text=" + encodeURIComponent(buildMsg());
+  window.open(url, "_blank");
+});
+document.getElementById('copyBtn').addEventListener('click', function(){
+  if(!ready()) return;
+  var text = buildMsg();
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){ toast(STR[lang].toastCopied); }, function(){ fallbackCopy(text); });
+  } else { fallbackCopy(text); }
+});
+function fallbackCopy(text){
+  var ta = document.createElement('textarea');
+  ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select();
+  try{ document.execCommand('copy'); toast(STR[lang].toastCopied); }catch(e){ toast(STR[lang].toastFail); }
+  document.body.removeChild(ta);
+}
+
+function setLang(l){
+  lang = (l === "en") ? "en" : "zh";
+  var d = T[lang];
+  document.documentElement.lang = lang === "en" ? "en" : "zh-Hant-HK";
+  document.title = d.docTitle;
+  var els, i;
+  els = document.querySelectorAll('[data-i18n]');
+  for(i=0;i<els.length;i++){ var k1 = els[i].getAttribute('data-i18n'); if(d[k1] != null) els[i].textContent = d[k1]; }
+  els = document.querySelectorAll('[data-i18n-html]');
+  for(i=0;i<els.length;i++){ var k2 = els[i].getAttribute('data-i18n-html'); if(d[k2] != null) els[i].innerHTML = d[k2]; }
+  els = document.querySelectorAll('[data-i18n-ph]');
+  for(i=0;i<els.length;i++){ var k3 = els[i].getAttribute('data-i18n-ph'); if(d[k3] != null) els[i].setAttribute('placeholder', d[k3]); }
+  els = document.querySelectorAll('[data-i18n-aria]');
+  for(i=0;i<els.length;i++){ var k4 = els[i].getAttribute('data-i18n-aria'); if(d[k4] != null) els[i].setAttribute('aria-label', d[k4]); }
+  document.getElementById('langZh').setAttribute('aria-pressed', lang === "zh" ? 'true' : 'false');
+  document.getElementById('langEn').setAttribute('aria-pressed', lang === "en" ? 'true' : 'false');
+  render();
+  paintSelected();
+  updateMsg();
+}
+document.getElementById('langZh').addEventListener('click', function(){ setLang("zh"); });
+document.getElementById('langEn').addEventListener('click', function(){ setLang("en"); });
+
+var navLang = ((navigator.language || "") + "").toLowerCase();
+setLang(navLang.indexOf("en") === 0 ? "en" : "zh");
+</script>
+</body>
+</html>
